@@ -10,7 +10,7 @@ public abstract class Square {
         this.file = file;
     }
 
-    public abstract boolean isOccupied();
+    public abstract boolean isOccupied(); 
 
     public abstract Piece getPiece();
 
