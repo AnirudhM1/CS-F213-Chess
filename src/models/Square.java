@@ -5,9 +5,17 @@ public abstract class Square {
     private final int rank;
     private final int file;
 
-    Square(int rank, int file) {
+    protected Square(int rank, int file) {
         this.rank = rank;
         this.file = file;
+    }
+
+    public int getRank() {
+        return this.rank;
+    }
+
+    public int getFile() {
+        return this.file;
     }
 
     public abstract boolean isOccupied(); 
@@ -16,7 +24,7 @@ public abstract class Square {
 
     public static final class EmptySquare extends Square {
 
-        EmptySquare(int rank, int file) {
+        public EmptySquare(int rank, int file) {
             super(rank, file);
         }
 
@@ -33,10 +41,11 @@ public abstract class Square {
 
     public static final class OccupiedSquare extends Square {
 
-        Piece piece;
+        private final Piece piece;
 
-        OccupiedSquare(int rank, int file) {
+        public OccupiedSquare(int rank, int file, Piece piece) {
             super(rank, file);
+            this.piece = piece;
         }
 
         @Override
