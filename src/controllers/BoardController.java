@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Move;
+import models.Piece;
 import models.Square;
 
 public final class BoardController {
@@ -50,9 +52,21 @@ public final class BoardController {
             this.currentPlayer = prevBoard.currentPlayer;
         }
 
-        // to update position of a peice on board
-        public Builder move() {
-            // update Square[][]
+        // updates position of a peice on board, using a Move object
+        public Builder executeMove(Move move) {
+            Square startSquare = move.getStartSquare();
+            int startRank = startSquare.getRank();
+            int startFile = startSquare.getFile();
+
+            Square endSquare = move.getEndSquare();
+            int endRank = endSquare.getRank();
+            int endFile = endSquare.getFile();
+
+            Piece peiceToMove = startSquare.getPiece();
+
+            this.board[startRank][startFile] = new Square.EmptySquare(startRank, startFile);
+            this.board[endRank][endFile] = new Square.OccupiedSquare(endRank, endFile, peiceToMove);
+
             return this;
         }
 
