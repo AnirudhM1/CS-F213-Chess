@@ -36,15 +36,9 @@ public final class BoardController {
         return this.currentPlayer;
     }
 
-    // setters
     public BoardController executeMove(Move move) {
         Builder builder = new Builder(this);
-        return builder.executeMove(move).build();
-    }
-
-    public BoardController player() {
-        Builder builder = new Builder(this);
-        return builder.player().build();
+        return builder.movePeice(move).togglePlayer().build();
     }
 
     public BoardController initialize() {
@@ -69,7 +63,7 @@ public final class BoardController {
         }
 
         // updates position of a peice on board, using a Move object
-        private Builder executeMove(Move move) {
+        private Builder movePeice(Move move) {
             Square startSquare = move.getStartSquare();
             int startRank = startSquare.getRank();
             int startFile = startSquare.getFile();
@@ -88,7 +82,7 @@ public final class BoardController {
 
         // to change the current playing player.
         // throws error if player is invalid.
-        private Builder player() throws Error {
+        private Builder togglePlayer() throws Error {
             if (this.currentPlayer.equals("WHITE")) {
                 this.currentPlayer = "BLACK";
             } else if (this.currentPlayer.equals("BLACK")) {
