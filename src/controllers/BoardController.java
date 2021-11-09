@@ -95,7 +95,7 @@ public final class BoardController {
             if (this.currentPlayer.equals("WHITE")) {
                 this.currentPlayer = "BLACK";
             } else if (this.currentPlayer.equals("BLACK")) {
-                this.currentPlayer = "BLACK";
+                this.currentPlayer = "WHITE";
             } else {
                 throw new Error("Invalid currentPlayer: \"" + this.currentPlayer + "\"");
             }
