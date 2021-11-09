@@ -36,14 +36,15 @@ public final class BoardController {
         return this.currentPlayer;
     }
 
+    // to create/initialize a fresh instance of BoardController
+    public static BoardController initialize() {
+        Builder builder = new Builder();
+        return builder.build();
+    }
+
     public BoardController executeMove(Move move) {
         Builder builder = new Builder(this);
         return builder.movePeice(move).togglePlayer().build();
-    }
-
-    public BoardController initialize() {
-        Builder builder = new Builder(this);
-        return builder.initialize().build();
     }
 
     // mutable Builder objects
@@ -52,6 +53,14 @@ public final class BoardController {
         private Square[][] board;
         // private Player whitePlayer, blackPlayer;
         private String currentPlayer;
+
+        // to create a fresh instance of Builder
+        private Builder() {
+            this.board = new Square[8][8];
+            // this.whitePlayer =
+            // this.blackPlayer =
+            this.currentPlayer = "WHITE";
+        }
 
         // receives BoardController object
         // and shallow copies it into a Builder object
@@ -91,14 +100,6 @@ public final class BoardController {
                 throw new Error("Invalid currentPlayer: \"" + this.currentPlayer + "\"");
             }
 
-            return this;
-        }
-
-        // initialise the board on startup
-        private Builder initialize() {
-            this.board = new Square[8][8];
-            // this.whitePlayer =
-            // this.blackPlayer =
             return this;
         }
 
