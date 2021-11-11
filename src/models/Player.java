@@ -23,13 +23,13 @@ public class Player{
         
     }
 
-    public ArrayList<Move>(ArrayList<Move> allMoves){
+    public ArrayList<Move> getAllMoves(ArrayList<Move> allMoves){
         
         return ArrayList<Move> allMoves;
 
     }
 
-    public ArrayList<Piece>(ArrayList<Move> allPieces){
+    public ArrayList<Piece> getAllPieces(ArrayList<Move> allPieces){
         
         return ArrayList<Piece> allPieces;
 
