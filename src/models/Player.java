@@ -9,6 +9,8 @@ public class Player{
     
     public Square[][] board;
 
+    public boolean inCheck;
+    
     private String color;
     private ArrayList<Move> allMoves = new ArrayList<Move>();
     private ArrayList<Piece> allPieces = new ArrayList<Piece>();
@@ -21,6 +23,7 @@ public class Player{
 
     public boolean isInCheck(){
         
+        return inCheck;
         
     }
 
