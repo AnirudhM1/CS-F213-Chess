@@ -13,9 +13,10 @@ public class Player{
     private ArrayList<Move> allMoves = new ArrayList<Move>();
     private ArrayList<Piece> allPieces = new ArrayList<Piece>();
 
-    public Player(Square[][] board, String currentPlayer){
+    public Player(Square[][] board){
+        
         this.board = board;
-        this.currentPlayer = color;
+    
     }
 
     public boolean isInCheck(){
