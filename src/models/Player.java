@@ -9,7 +9,7 @@ public class Player{
     
     public final Square[][] board;
 
-    public final boolean inCheck;
+    public final boolean inCheck =  false;
     
     private final String color;
     private final ArrayList<Move> allMoves = new ArrayList<Move>();
@@ -23,7 +23,7 @@ public class Player{
 
     public boolean isInCheck(){
         
-        return inCheck;
+        return this.inCheck;
         
     }
 
