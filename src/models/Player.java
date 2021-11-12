@@ -11,7 +11,7 @@ public class Player{
 
     public final boolean inCheck =  false;
     
-    private final String color;
+    private final String color = currentPlayer;
     private final ArrayList<Move> allMoves = new ArrayList<Move>();
     private final ArrayList<Piece> allPieces = new ArrayList<Piece>();
 
