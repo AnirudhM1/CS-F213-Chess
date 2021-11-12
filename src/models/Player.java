@@ -7,11 +7,11 @@ import java.util.*;
 
 public class Player{
     
-    public Square[][] board;
+    public final Square[][] board;
 
-    public boolean inCheck;
+    public final boolean inCheck;
     
-    private String color;
+    private final String color;
     private final ArrayList<Move> allMoves = new ArrayList<Move>();
     private final ArrayList<Piece> allPieces = new ArrayList<Piece>();
 
@@ -27,19 +27,19 @@ public class Player{
         
     }
 
-    public ArrayList<Move> getAllMoves(ArrayList<Move> allMoves){
+    public ArrayList<Move> getAllMoves(){
         
         return this.allMoves;
 
     }
 
-    public ArrayList<Piece> getAllPieces(ArrayList<Piece> allPieces){
+    public ArrayList<Piece> getAllPieces(){
         
         return this.allPieces;
 
     }
 
-    public String getColor(String color){
+    public String getColor(){
         
         return this.color;
 
