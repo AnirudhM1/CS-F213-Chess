@@ -7,17 +7,18 @@ import java.util.*;
 
 public class Player{
     
-    public final Square[][] board;
+    private final Square[][] board;
 
-    public final boolean inCheck =  false;
+    private final boolean inCheck =  false;
     
-    private final String color = BoardController.currentPlayer;
+    private final String color;
     private final ArrayList<Move> allMoves = new ArrayList<Move>();
     private final ArrayList<Piece> allPieces = new ArrayList<Piece>();
 
-    public Player(Square[][] board){
+    public Player(Square[][] board, String color){
         
         this.board = board;
+        this.color = color;
     
     }
 
