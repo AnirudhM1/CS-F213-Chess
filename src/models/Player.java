@@ -12,8 +12,8 @@ public class Player{
     public boolean inCheck;
     
     private String color;
-    private ArrayList<Move> allMoves = new ArrayList<Move>();
-    private ArrayList<Piece> allPieces = new ArrayList<Piece>();
+    private final ArrayList<Move> allMoves = new ArrayList<Move>();
+    private final ArrayList<Piece> allPieces = new ArrayList<Piece>();
 
     public Player(Square[][] board){
         
@@ -29,19 +29,19 @@ public class Player{
 
     public ArrayList<Move> getAllMoves(ArrayList<Move> allMoves){
         
-        return allMoves;
+        return this.allMoves;
 
     }
 
     public ArrayList<Piece> getAllPieces(ArrayList<Piece> allPieces){
         
-        return allPieces;
+        return this.allPieces;
 
     }
 
     public String getColor(String color){
         
-        return color;
+        return this.color;
 
     }
 
