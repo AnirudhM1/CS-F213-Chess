@@ -26,6 +26,10 @@ public abstract class Piece {
         return this.color;
     }
 
-    public abstract List getAllMoves(Square[][] board);
-    
+    public abstract List<Move> getAllMoves(Square[][] board);
+
+    public static Piece createPiece(int rank, int file, String color, String piece) {
+        return null;
+    }
+
 }

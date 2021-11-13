@@ -18,7 +18,7 @@ public abstract class Square {
         return this.file;
     }
 
-    public abstract boolean isOccupied(); 
+    public abstract boolean isOccupied();
 
     public abstract Piece getPiece();
 
@@ -58,4 +58,9 @@ public abstract class Square {
             return true;
         }
     }
+
+    public static Square createSquare(int rank, int file, Piece piece) {
+        return (piece == null) ? new EmptySquare(rank, file) : new OccupiedSquare(rank, file, piece);
+    }
+
 }
