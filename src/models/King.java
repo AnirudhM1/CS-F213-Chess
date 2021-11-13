@@ -3,27 +3,23 @@ import models.Square;
 
 public class King extends Piece {
   
-    public King(String white)
-    {
-        super(white);
-    }
-  
-  
-    @Override
-    public boolean canMove(Square Square, Piece start, Piece end)
-    {
+    public Collection<Move> getAllMoves(final Square[][] gameboard) {
+        
+        Collection<Move> legalMoves = new ArrayList<>();
+        
+        legalMoves.add(new Move(super.rank+1, super.file, this));
+        legalMoves.add(new Move(super.rank-1, super.file, this));
 
-        if (end.getColor == start.getColor) {
-            return false;
-        }
-  
-        int x = Math.abs(start.getRank- end.getRank);
-        int y = Math.abs(start.getfile - end.getfile);
-        if ((x<=1) & (y<=1)) {
-            return true;
-        }
-  
-        return false;
+        legalMoves.add(new Move(super.rank, super.file+1, this));
+        legalMoves.add(new Move(super.rank, super.file-1, this));
+
+        legalMoves.add(new Move(super.rank+1, super.file+1, this));
+        legalMoves.add(new Move(super.rank-1, super.file-1, this));
+
+        legalMoves.add(new Move(super.rank+1, super.file-1, this));
+        legalMoves.add(new Move(super.rank-1, super.file+1, this));
+        
+        return legalMoves;
     }
   
     
