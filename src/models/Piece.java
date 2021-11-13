@@ -1,6 +1,8 @@
 package models;
 
 import java.util.List;
+import java.util.Collection;
+
 
 public abstract class Piece {
 
@@ -26,6 +28,6 @@ public abstract class Piece {
         return this.color;
     }
 
-    public abstract List getAllMoves(Square[][] board);
+    public abstract Collection<Move> getAllMoves(Square[][] board);
     
 }

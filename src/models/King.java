@@ -1,26 +1,45 @@
+package models;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import models.Piece;
 import models.Square;
 
 public class King extends Piece {
-  
-    public Collection<Move> getAllMoves(final Square[][] gameboard) {
+	
+	
+
+	protected King(int rank, int file, String color) {
+		super(rank, file, color);
+	}
+	
+	
+
+	@Override
+	public Collection<Move> getAllMoves(Square[][] board) {
+		Collection<Move> legalMoves = new ArrayList<>();
         
-        Collection<Move> legalMoves = new ArrayList<>();
-        
-        legalMoves.add(new Move(super.rank+1, super.file, this));
-        legalMoves.add(new Move(super.rank-1, super.file, this));
+        legalMoves.add(new Move(super.getRank()+1, super.getFile(), this));
+        legalMoves.add(new Move(super.getRank()-1, super.getFile(), this));
 
-        legalMoves.add(new Move(super.rank, super.file+1, this));
-        legalMoves.add(new Move(super.rank, super.file-1, this));
+        legalMoves.add(new Move(super.getRank(), super.getFile()+1, this));
+        legalMoves.add(new Move(super.getRank(), super.getFile()-1, this));
 
-        legalMoves.add(new Move(super.rank+1, super.file+1, this));
-        legalMoves.add(new Move(super.rank-1, super.file-1, this));
+        legalMoves.add(new Move(super.getRank()+1, super.getFile()+1, this));
+        legalMoves.add(new Move(super.getRank()-1, super.getFile()-1, this));
 
-        legalMoves.add(new Move(super.rank+1, super.file-1, this));
-        legalMoves.add(new Move(super.rank-1, super.file+1, this));
+        legalMoves.add(new Move(super.getRank()+1, super.getFile()-1, this));
+        legalMoves.add(new Move(super.getRank()-1, super.getFile()+1, this));
         
         return legalMoves;
-    }
+		
+	}
+
+	
+	
+
   
     
 }

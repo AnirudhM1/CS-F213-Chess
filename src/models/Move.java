@@ -8,6 +8,10 @@ public class Move {
         startSquare = start;
         endSquare = end;
     }
+    public Move(int i, int j, King king) {
+		this.startSquare = null;
+		this.endSquare = null;
+	}
 
     public Square getStartSquare() {
         return startSquare;
