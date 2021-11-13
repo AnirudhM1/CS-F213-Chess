@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Move;
+import models.Piece;
 import models.Square;
 
 public final class BoardController {
@@ -34,35 +36,66 @@ public final class BoardController {
         return this.currentPlayer;
     }
 
+    // to create/initialize a fresh instance of BoardController
+    public static BoardController initialize() {
+        Builder builder = new Builder();
+        return builder.build();
+    }
+
+    public BoardController executeMove(Move move) {
+        Builder builder = new Builder(this);
+        return builder.movePeice(move).togglePlayer().build();
+    }
+
     // mutable Builder objects
     // used to build immutable BoardController objects
-    public static class Builder {
+    private static class Builder {
         private Square[][] board;
         // private Player whitePlayer, blackPlayer;
         private String currentPlayer;
 
+        // to create a fresh instance of Builder
+        private Builder() {
+            this.board = new Square[8][8];
+            // this.whitePlayer =
+            // this.blackPlayer =
+            this.currentPlayer = "WHITE";
+        }
+
         // receives BoardController object
         // and shallow copies it into a Builder object
-        public Builder(BoardController prevBoard) {
+        private Builder(BoardController prevBoard) {
             this.board = prevBoard.board;
             // this.whitePlayer = prevBoard.whitePlayer;
             // this.blackPlayer = prevBoard.blackPlayer;
             this.currentPlayer = prevBoard.currentPlayer;
         }
 
-        // to update position of a peice on board
-        public Builder move() {
-            // update Square[][]
+        // updates position of a peice on board, using a Move object
+        private Builder movePeice(Move move) {
+            Square startSquare = move.getStartSquare();
+            int startRank = startSquare.getRank();
+            int startFile = startSquare.getFile();
+
+            Square endSquare = move.getEndSquare();
+            int endRank = endSquare.getRank();
+            int endFile = endSquare.getFile();
+
+            Piece peiceToMove = startSquare.getPiece();
+
+            this.board[startRank][startFile] = new Square.EmptySquare(startRank, startFile);
+            this.board[endRank][endFile] = new Square.OccupiedSquare(endRank, endFile, peiceToMove);
+
             return this;
         }
 
         // to change the current playing player.
         // throws error if player is invalid.
-        public Builder player() throws Error {
+        private Builder togglePlayer() throws Error {
             if (this.currentPlayer.equals("WHITE")) {
                 this.currentPlayer = "BLACK";
             } else if (this.currentPlayer.equals("BLACK")) {
-                this.currentPlayer = "BLACK";
+                this.currentPlayer = "WHITE";
             } else {
                 throw new Error("Invalid currentPlayer: \"" + this.currentPlayer + "\"");
             }
@@ -70,17 +103,9 @@ public final class BoardController {
             return this;
         }
 
-        // initialise the board on startup
-        public Builder initialize() {
-            this.board = new Square[8][8];
-            // this.whitePlayer =
-            // this.blackPlayer =
-            return this;
-        }
-
         // return immutable BoardController object
         // by making a shallow copy of the Builder object
-        public BoardController build() {
+        private BoardController build() {
             return new BoardController(this);
         }
     }
