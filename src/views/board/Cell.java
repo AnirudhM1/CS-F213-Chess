@@ -1,5 +1,6 @@
 package views.board;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
@@ -13,6 +14,17 @@ public class Cell extends JPanel implements MouseInputListener {
 
     public Cell(BoardPanel panel, Square square) {
         this.square = square;
+
+        setCell();
+    }
+
+    private void setCell() {
+        int rank = square.getRank();
+        int file = square.getFile();
+
+        Color color = ((rank + file) % 2 == 0) ? BoardPanel.BLACK_COLOR : BoardPanel.WHITE_COLOR;
+        setBackground(color);
+
     }
 
     @Override

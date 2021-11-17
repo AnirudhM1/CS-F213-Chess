@@ -15,8 +15,8 @@ import models.Square;
 
 public class BoardPanel extends JPanel {
 
-    private static final Color WHITE_COLOR = Color.WHITE;
-    private static final Color BLACK_COLOR = Color.GREEN;
+    public static final Color WHITE_COLOR = Color.WHITE;
+    public static final Color BLACK_COLOR = Color.GREEN;
 
     private Square[][] board;
     private Updater updater;
@@ -48,6 +48,16 @@ public class BoardPanel extends JPanel {
         });
     }
 
+    private void setCells() {
+        for (int rank = 0; rank < 8; rank++) {
+            for (int file = 0; file < 8; file++) {
+                Square sq = board[rank][file];
+                Cell cell = new Cell(this, sq);
+                add(cell);
+            }
+        }
+    }
+
     private static void componentResize(JComponent outer, JComponent inner) {
 
         double width = outer.getWidth() * 0.8;
@@ -61,16 +71,6 @@ public class BoardPanel extends JPanel {
 
         outer.revalidate();
 
-    }
-
-    private void setCells() {
-        for (int rank = 0; rank < 8; rank++) {
-            for (int file = 0; file < 8; file++) {
-                Square sq = board[rank][file];
-                Cell cell = new Cell(this, sq);
-                add(cell);
-            }
-        }
     }
 
 }
