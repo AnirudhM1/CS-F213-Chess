@@ -103,7 +103,7 @@ public class Gui {
 
     public void setState(Updater updater, Square[][] board) {
         BoardPanel boardPanel = new BoardPanel(outerBoardPanel, updater, board);
-
+        outerBoardPanel.add(boardPanel);
     }
 
     public static void main(String[] args) {
