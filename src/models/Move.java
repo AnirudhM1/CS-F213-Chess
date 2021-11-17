@@ -16,4 +16,8 @@ public class Move {
     public Square getEndSquare() {
         return endSquare;
     }
+
+    public boolean equals(Move moveObj) {
+        return this.startSquare.equals(moveObj.startSquare) && this.endSquare.equals(moveObj.endSquare);
+    }
 }

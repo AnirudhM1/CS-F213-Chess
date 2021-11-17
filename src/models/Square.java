@@ -63,4 +63,7 @@ public abstract class Square {
         return (piece == null) ? new EmptySquare(rank, file) : new OccupiedSquare(rank, file, piece);
     }
 
+    public boolean equals(Square square) {
+        return this.rank == square.rank && this.file == square.file;
+    }
 }
