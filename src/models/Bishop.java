@@ -36,7 +36,6 @@ public class Bishop extends Piece {
                     legalMoves.add(new Move(startSquare, endSquare));
                 }
             }
-        }
 
         for(int i=1;i<=7;i++){
             endSquare = board[super.getRank()-i][super.getFile()-i];
