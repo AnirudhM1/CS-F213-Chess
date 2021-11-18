@@ -2,7 +2,7 @@ package models;
 
 import java.util.*;
 
-public class Knight extends Piece {
+public class Bishop extends Piece {
 
     protected Bishop(int rank, int file, String color) {
         super(rank, file, color);
