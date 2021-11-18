@@ -2,6 +2,11 @@ package views;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import controllers.Updater;
+import models.Square;
+import views.board.BoardPanel;
+
 import javax.swing.*;
 
 import java.awt.GridBagLayout;
@@ -12,11 +17,21 @@ public class Gui {
     private JFrame mainframe;
 
     private JPanel outerBoardPanel;
-    private JPanel boardPanel;
+    // private JPanel boardPanel;
     private JPanel optionPanel;
     private JPanel extraPanel;
 
+    private Updater updater;
+
     public Gui() {
+        setMainFrame();
+        setPanels();
+    }
+
+    public Gui(Updater updater) {
+
+        this.updater = updater;
+
         setMainFrame();
         setPanels();
     }
@@ -84,6 +99,11 @@ public class Gui {
         c.weighty = 0.9;
 
         mainframe.add(extraPanel, c);
+    }
+
+    public void setState(Updater updater, Square[][] board) {
+        BoardPanel boardPanel = new BoardPanel(outerBoardPanel, updater, board);
+        outerBoardPanel.add(boardPanel);
     }
 
     public static void main(String[] args) {
