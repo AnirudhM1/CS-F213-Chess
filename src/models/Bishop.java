@@ -26,8 +26,8 @@ public class Bishop extends Piece {
     
 
     @Override
-    public List<Move> getAllMoves(Square[][] board) {
-        List<Move> legalMoves = new ArrayList<>();
+    public ArrayList<Move> getAllMoves(Square[][] board) {
+        ArrayList<Move> legalMoves = new ArrayList<>();
         Square startSquare = Square.createSquare(super.getRank(), super.getFile(), this);
 
         for(int i=1;i<=7;i++){
