@@ -3,6 +3,7 @@ package views.board;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
@@ -11,9 +12,11 @@ import models.Square;
 public class Cell extends JPanel implements MouseInputListener {
 
     private Square square;
+    private BoardPanel panel;
 
     public Cell(BoardPanel panel, Square square) {
         this.square = square;
+        this.panel = panel;
 
         setCell();
     }
@@ -24,6 +27,8 @@ public class Cell extends JPanel implements MouseInputListener {
 
         Color color = ((rank + file) % 2 == 0) ? BoardPanel.BLACK_COLOR : BoardPanel.WHITE_COLOR;
         setBackground(color);
+
+        addMouseListener(this);
 
     }
 
@@ -47,12 +52,16 @@ public class Cell extends JPanel implements MouseInputListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        panel.setSelectedCell(this);
+        setBorder(BorderFactory.createLineBorder(Color.RED));
         // Highlight the square
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        panel.setSelectedCell(null);
+        setBorder(null);
         // remove highlight
 
     }

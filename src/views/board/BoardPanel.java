@@ -36,6 +36,10 @@ public class BoardPanel extends JPanel {
         setCells();
     }
 
+    public void setSelectedCell(Cell cell) {
+        selectedCell = cell;
+    }
+
     private void setPanel() {
         setLayout(new GridLayout(8, 8));
         addComponentListener(new ComponentAdapter() {
@@ -54,6 +58,7 @@ public class BoardPanel extends JPanel {
                 Square sq = board[rank][file];
                 Cell cell = new Cell(this, sq);
                 add(cell);
+                cells[cell.hashCode()] = cell;
             }
         }
     }
