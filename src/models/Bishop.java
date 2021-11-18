@@ -16,14 +16,14 @@ public class Bishop extends Piece {
                 } else {
                     return true;
                 }
-
+            }
             else {
                 return true;
             }
         } else {
             return false;
-        }
-    }
+      }
+    
 
     @Override
     public List<Move> getAllMoves(Square[][] board) {
