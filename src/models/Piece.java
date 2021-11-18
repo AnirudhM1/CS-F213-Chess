@@ -31,5 +31,5 @@ public abstract class Piece {
     public static Piece createPiece(int rank, int file, String color, String piece) {
         return null;
     }
-
+    
 }

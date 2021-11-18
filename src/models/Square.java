@@ -66,4 +66,5 @@ public abstract class Square {
     public boolean equals(Square square) {
         return this.rank == square.rank && this.file == square.file;
     }
+    
 }
