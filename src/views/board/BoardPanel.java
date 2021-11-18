@@ -58,6 +58,11 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    // This function is called by the Gui class to reset all clicks, etc
+    public void resetClicks() {
+        // TODO implement this function
+    }
+
     private static void componentResize(JComponent outer, JComponent inner) {
 
         double width = outer.getWidth() * 0.8;

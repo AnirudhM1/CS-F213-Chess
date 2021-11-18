@@ -4,10 +4,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controllers.Updater;
+import models.Move;
 import models.Square;
 import views.board.BoardPanel;
 
-import javax.swing.*;
+// import javax.swing.*;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -17,11 +18,11 @@ public class Gui {
     private JFrame mainframe;
 
     private JPanel outerBoardPanel;
-    // private JPanel boardPanel;
+    private BoardPanel boardPanel;
     private JPanel optionPanel;
     private JPanel extraPanel;
 
-    private Updater updater;
+    // private Updater updater;
 
     public Gui() {
         setMainFrame();
@@ -30,7 +31,7 @@ public class Gui {
 
     public Gui(Updater updater) {
 
-        this.updater = updater;
+        // this.updater = updater;
 
         setMainFrame();
         setPanels();
@@ -101,9 +102,19 @@ public class Gui {
         mainframe.add(extraPanel, c);
     }
 
+    // Updater class calls this method to set the state of the gui
     public void setState(Updater updater, Square[][] board) {
-        BoardPanel boardPanel = new BoardPanel(outerBoardPanel, updater, board);
+        boardPanel = new BoardPanel(outerBoardPanel, updater, board);
         outerBoardPanel.add(boardPanel);
+    }
+
+    // This method resets all the highlighted squares, etc. in the board panel class
+    public void resetClicks() {
+        boardPanel.resetClicks();
+    }
+
+    public void addMove(Move move) {
+        // TODO Add move to the move list
     }
 
     public static void main(String[] args) {
