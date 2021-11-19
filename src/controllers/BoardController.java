@@ -3,19 +3,20 @@ package controllers;
 import models.Move;
 import models.Piece;
 import models.Square;
+import models.Player;
 
 public final class BoardController {
 
     private final Square[][] board;
-    // private final Player whitePlayer, blackPlayer;
+    private final Player whitePlayer, blackPlayer;
     private final String currentPlayer;
 
     // receives Builder object
     // and shallow copies it into a BoardController object
     private BoardController(Builder builder) {
         this.board = builder.board;
-        // this.whitePlayer = builder.whitePlayer;
-        // this.blackPlayer = builder.blackPlayer;
+        this.whitePlayer = builder.whitePlayer;
+        this.blackPlayer = builder.blackPlayer;
         this.currentPlayer = builder.currentPlayer;
     }
 
@@ -24,13 +25,13 @@ public final class BoardController {
         return this.board;
     }
 
-    // public Player getWhitePlayer() {
-    // return this.whitePlayer;
-    // }
+    public Player getWhitePlayer() {
+        return this.whitePlayer;
+    }
 
-    // public Player getBlackPlayer() {
-    // return this.blackPlayer;
-    // }
+    public Player getBlackPlayer() {
+        return this.blackPlayer;
+    }
 
     public String getCurrentPlayer() {
         return this.currentPlayer;
@@ -51,14 +52,14 @@ public final class BoardController {
     // used to build immutable BoardController objects
     private static class Builder {
         private Square[][] board;
-        // private Player whitePlayer, blackPlayer;
+        private Player whitePlayer, blackPlayer;
         private String currentPlayer;
 
         // to create a fresh instance of Builder
         private Builder() {
             this.board = new Square[8][8];
-            // this.whitePlayer =
-            // this.blackPlayer =
+            this.whitePlayer = new Player(this.board, "WHITE");
+            this.blackPlayer = new Player(this.board, "BLACK");
             this.currentPlayer = "WHITE";
         }
 
@@ -66,8 +67,8 @@ public final class BoardController {
         // and shallow copies it into a Builder object
         private Builder(BoardController prevBoard) {
             this.board = prevBoard.board;
-            // this.whitePlayer = prevBoard.whitePlayer;
-            // this.blackPlayer = prevBoard.blackPlayer;
+            this.whitePlayer = prevBoard.whitePlayer;
+            this.blackPlayer = prevBoard.blackPlayer;
             this.currentPlayer = prevBoard.currentPlayer;
         }
 
