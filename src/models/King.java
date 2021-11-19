@@ -13,22 +13,17 @@ public class King extends Piece {
 	}
 	
 	public boolean Check(Square End) {
-		if(End.getRank()>=0 && End.getFile()>=0 && End.getRank()<=7 && End.getFile()<=7) {
-			if(End.isOccupied()) {
-				if(this.getColor().equals(End.getPiece().getColor())) {
-					return false;
-				}
-				else {
-					return true;
-				}
-				
+		if(End.isOccupied()) {
+			if(this.getColor().equals(End.getPiece().getColor())) {
+				return false;
 			}
 			else {
 				return true;
 			}
+			
 		}
 		else {
-			return false;
+			return true;
 		}
 	}
 		
@@ -38,43 +33,61 @@ public class King extends Piece {
 		List<Move> legalMoves = new ArrayList<>();
 		Square startSquare = Square.createSquare(super.getRank(), super.getFile(),this);
 		
-		Square endSquare1 = board[super.getRank()+1][ super.getFile()];
-		if(Check(endSquare1)) {
-			legalMoves.add(new Move(startSquare, endSquare1));		
-		}
-		Square endSquare2 = board[super.getRank()-1][ super.getFile()];
-		if(Check(endSquare2)) {
-			legalMoves.add(new Move(startSquare, endSquare2));		
+		if(super.getRank()+1>=0 && super.getRank()+1<=7 && super.getFile()>=0 && super.getFile()<=7) {
+			Square endSquare1 = board[super.getRank()+1][ super.getFile()];
+			if(Check(endSquare1)) {
+				legalMoves.add(new Move(startSquare, endSquare1));		
+			}	
+		}	
+		if(super.getRank()-1>=0 && super.getRank()-1<=7 && super.getFile()>=0 && super.getFile()<=7) {
+			Square endSquare2 = board[super.getRank()-1][ super.getFile()];
+			if(Check(endSquare2)) {
+				legalMoves.add(new Move(startSquare, endSquare2));		
+			}
 		}
 		
-		Square endSquare3 = board[super.getRank()][ super.getFile()+1];
-		if(Check(endSquare3)) {
-			legalMoves.add(new Move(startSquare, endSquare3));	
+		if(super.getRank()>=0 && super.getRank()<=7 && super.getFile()+1>=0 && super.getFile()+1<=7) {
+			Square endSquare3 = board[super.getRank()][ super.getFile()+1];
+			if(Check(endSquare3)) {
+				legalMoves.add(new Move(startSquare, endSquare3));	
+			
+			
 		}
-		Square endSquare4 = board[super.getRank()][ super.getFile()-1];
-        if(Check(endSquare4)) {
-			legalMoves.add(new Move(startSquare, endSquare4));	
+		if(super.getRank()>=0 && super.getRank()<=7 && super.getFile()-1>=0 && super.getFile()-1<=7) {
+			Square endSquare4 = board[super.getRank()][ super.getFile()-1];
+	        if(Check(endSquare4)) {
+				legalMoves.add(new Move(startSquare, endSquare4));	
+			}
 		}
-        
-        Square endSquare5 = board[super.getRank()+1][ super.getFile()+1];
-        if(Check(endSquare5)) {
-			legalMoves.add(new Move(startSquare, endSquare5));	
+		
+		if(super.getRank()+1>=0 && super.getRank()+1<=7 && super.getFile()+1>=0 && super.getFile()+1<=7) {
+			Square endSquare5 = board[super.getRank()+1][ super.getFile()+1];
+	        if(Check(endSquare5)) {
+				legalMoves.add(new Move(startSquare, endSquare5));	
+			}
 		}
-        Square endSquare6 = board[super.getRank()-1][ super.getFile()-1];
-        if(Check(endSquare6)) {
-			legalMoves.add(new Move(startSquare, endSquare6));	
+		if(super.getRank()-1>=0 && super.getRank()-1<=7 && super.getFile()-1>=0 && super.getFile()-1<=7) {
+			Square endSquare6 = board[super.getRank()-1][ super.getFile()-1];
+	        if(Check(endSquare6)) {
+				legalMoves.add(new Move(startSquare, endSquare6));	
+			}
 		}
-        
-        Square endSquare7 = board[super.getRank()+1][ super.getFile()-1];
-        if(Check(endSquare7)) {
-			legalMoves.add(new Move(startSquare, endSquare7));	
+		
+		if(super.getRank()+1>=0 && super.getRank()+1<=7 && super.getFile()-1>=0 && super.getFile()-1<=7) {
+			 Square endSquare7 = board[super.getRank()+1][ super.getFile()-1];
+		        if(Check(endSquare7)) {
+					legalMoves.add(new Move(startSquare, endSquare7));	
+			}
 		}
-        Square endSquare8 = board[super.getRank()-1][ super.getFile()+1];
-        if(Check(endSquare8)) {
-			legalMoves.add(new Move(startSquare, endSquare8));	
-		}
+		if(super.getRank()-1>=0 && super.getRank()-1<=7 && super.getFile()+1>=0 && super.getFile()+1<=7){
+			Square endSquare8 = board[super.getRank()-1][ super.getFile()+1];
+	        if(Check(endSquare8)) {
+				legalMoves.add(new Move(startSquare, endSquare8));	
+			}
 
-        
+		}
+	 }
+   
         return legalMoves;
 		
 	}
