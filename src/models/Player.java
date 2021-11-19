@@ -22,7 +22,9 @@ public class Player{
     
     }
     
-    public ArrayList<Move> calculateAllMoves(ArrayList<Piece> allPieces){
+    public void calculateAllMoves(ArrayList<Piece> allPieces){
+        
+        allMoves.clear();
         
         for(Piece piece : allPieces){
             
@@ -30,8 +32,6 @@ public class Player{
         
         }
         
-        return allMoves;
-
     }
     public boolean isInCheck(){
         
