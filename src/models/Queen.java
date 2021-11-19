@@ -36,59 +36,67 @@ public class Queen extends Piece{
 
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()+1][super.getFile()];
+			endSquare =  board[super.getRank()+i][super.getFile()];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
+			else break;
 		}
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()-1][super.getFile()];
+			endSquare =  board[super.getRank()-i][super.getFile()];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
+			else break;
 		}
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()][super.getFile()-1];
+			endSquare =  board[super.getRank()][super.getFile()-i];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
+			else break;
 		}
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()][super.getFile()+1];
+			endSquare =  board[super.getRank()][super.getFile()+i];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
+			else break;
 		}
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()+1][super.getFile()+1];
+			endSquare =  board[super.getRank()+i][super.getFile()+i];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
+			else break;
 		}
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()+1][super.getFile()-1];
+			endSquare =  board[super.getRank()+i][super.getFile()-i];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
+			else break;
 		}
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()-1][super.getFile()+1];
+			endSquare =  board[super.getRank()-i][super.getFile()+i];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
+			else break;
 		}
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()-1][super.getFile()-1];
+			endSquare =  board[super.getRank()-i][super.getFile()-i];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
+			else break;
 		}
 		return legalMoves;
 	}
