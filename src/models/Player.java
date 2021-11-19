@@ -21,7 +21,18 @@ public class Player{
         this.color = color;
     
     }
-
+    
+    public void calculateAllMoves(ArrayList<Piece> allPieces){
+        
+        allMoves.clear();
+        
+        for(Piece piece : allPieces){
+            
+            allMoves.addAll(piece.getAllMoves(board));
+        
+        }
+        
+    }
     public boolean isInCheck(){
         
         return this.inCheck;
@@ -34,7 +45,7 @@ public class Player{
 
     }
 
-    public ArrayList<Piece> getAllPieces(){
+    public ArrayList<Piece> getAllPiecesArrayList(){
         
         return this.allPieces;
 
