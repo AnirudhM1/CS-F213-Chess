@@ -22,13 +22,15 @@ public class Player{
     
     }
     
-    public ArrayList<Move> calculateAllMoves(){
+    public ArrayList<Move> calculateAllMoves(allPieces){
         
         for(Piece piece : allPieces){
             
             allMoves.addAll(piece.getAllMoves(board));
         
         }
+        
+        return allMoves;
 
     }
     public boolean isInCheck(){
