@@ -90,9 +90,9 @@ public class Queen extends Piece{
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
 		}
-
+		return legalMoves;
 	}
-	return legalMoves;
+
 
     
 }
