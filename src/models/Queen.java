@@ -57,7 +57,7 @@ public class Queen extends Piece{
 		}
 		for(int i = 0 ; i<7; i++)
 		{
-			endSquare =  board[super.getRank()+1][super.getFile()+1];
+			endSquare =  board[super.getRank()][super.getFile()+1];
 			if(Check(endSquare)){
 				legalMoves.add(new Move(startSquare, endSquare));
 			}
