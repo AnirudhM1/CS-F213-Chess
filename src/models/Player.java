@@ -22,7 +22,7 @@ public class Player{
     
     }
     
-    public ArrayList<Move> calculateAllMoves(allPieces){
+    public ArrayList<Move> calculateAllMoves(ArrayList<Piece> allPieces){
         
         for(Piece piece : allPieces){
             
