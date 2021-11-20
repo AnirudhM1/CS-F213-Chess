@@ -26,7 +26,7 @@ public class Queen extends Piece{
 	}
 	public List<Move> getAllMoves(Square[][] board){
 		List<Move> legalMoves = new ArrayList<>();
-		Square startSquare = createSquare(super.getRank(), super.getFile(),this);
+		Square startSquare = board[super.getRank()][super.getFile()];
         Square endSquare = board[super.getRank()][super.getFile()];
 
 		for(int i = 0 ; i<7; i++)
