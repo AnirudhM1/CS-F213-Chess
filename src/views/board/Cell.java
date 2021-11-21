@@ -13,6 +13,9 @@ public class Cell extends JPanel implements MouseInputListener {
 
     private Square square;
     private BoardPanel panel;
+    private Color defaultColor;
+    private static final Color highlightedColor = new Color(220, 240, 239);
+    private boolean highlighted;
 
     public Cell(BoardPanel panel, Square square) {
         this.square = square;
@@ -25,17 +28,33 @@ public class Cell extends JPanel implements MouseInputListener {
         int rank = square.getRank();
         int file = square.getFile();
 
-        Color color = ((rank + file) % 2 == 0) ? BoardPanel.BLACK_COLOR : BoardPanel.WHITE_COLOR;
-        setBackground(color);
+        defaultColor = ((rank + file) % 2 == 0) ? BoardPanel.BLACK_COLOR : BoardPanel.WHITE_COLOR;
+        setBackground(defaultColor);
+        highlighted = false;
 
         addMouseListener(this);
 
     }
 
+    public void toggleHighlight() {
+        if (highlighted) {
+            setBackground(defaultColor);
+            highlighted = false;
+        } else {
+            setBackground(highlightedColor);
+            highlighted = true;
+        }
+    }
+
+    public Square getSquare() {
+        return this.square;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         // Select/deselect square OR create move
-
+        panel.clickedCell(this);
+        // toggleHighlight();
     }
 
     @Override
@@ -52,15 +71,12 @@ public class Cell extends JPanel implements MouseInputListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        panel.setSelectedCell(this);
         setBorder(BorderFactory.createLineBorder(Color.RED));
         // Highlight the square
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        panel.setSelectedCell(null);
         setBorder(null);
         // remove highlight
 
@@ -93,6 +109,12 @@ public class Cell extends JPanel implements MouseInputListener {
         builder.append(r);
 
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(Object cellObj) {
+        Cell cell = (Cell) cellObj;
+        return this.square.equals(cell.square);
     }
 
 }

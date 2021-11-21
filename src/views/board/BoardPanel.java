@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JComponent;
 
 import controllers.Updater;
+import models.Move;
 import models.Square;
 
 public class BoardPanel extends JPanel {
@@ -36,8 +37,18 @@ public class BoardPanel extends JPanel {
         setCells();
     }
 
-    public void setSelectedCell(Cell cell) {
-        selectedCell = cell;
+    public void clickedCell(Cell cell) {
+        if (selectedCell == null) {
+            selectedCell = cell;
+            cell.toggleHighlight();
+        } else if (selectedCell.equals(cell)) {
+            selectedCell = null;
+            cell.toggleHighlight();
+        } else {
+            selectedCell.toggleHighlight();
+            generateMove(cell);
+            selectedCell = null;
+        }
     }
 
     private void setPanel() {
@@ -53,7 +64,7 @@ public class BoardPanel extends JPanel {
     }
 
     private void setCells() {
-        for (int rank = 0; rank < 8; rank++) {
+        for (int rank = 7; rank >= 0; rank--) {
             for (int file = 0; file < 8; file++) {
                 Square sq = board[rank][file];
                 Cell cell = new Cell(this, sq);
@@ -81,6 +92,11 @@ public class BoardPanel extends JPanel {
 
         outer.revalidate();
 
+    }
+
+    private void generateMove(Cell cell) {
+        Move move = new Move(selectedCell.getSquare(), cell.getSquare());
+        updater.checkAndUpdate(move);
     }
 
 }
