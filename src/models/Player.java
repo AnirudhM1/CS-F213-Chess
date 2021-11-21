@@ -19,10 +19,10 @@ public class Player{
         
         this.board = board;
         this.color = color;
-    
+        calculateAllMoves();
     }
     
-    public void calculateAllMoves(ArrayList<Piece> allPieces){
+    private void calculateAllMoves() {
         
         allMoves.clear();
         

@@ -17,6 +17,13 @@ public class Move {
         return endSquare;
     }
 
+    public boolean attacksKing() {
+        if (!endSquare.isOccupied())
+            return false;
+
+        return endSquare.getPiece() instanceof King;
+    }
+
     public boolean equals(Move moveObj) {
         return this.startSquare.equals(moveObj.startSquare) && this.endSquare.equals(moveObj.endSquare);
     }
