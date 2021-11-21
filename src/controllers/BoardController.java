@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import models.Move;
 import models.Piece;
 import models.Square;
@@ -11,6 +13,9 @@ public final class BoardController {
     private final Player whitePlayer, blackPlayer;
     private final String currentPlayer;
 
+    private final ArrayList<Move> currentLegalMoves = new ArrayList<Move>();
+    private boolean haveLegalMovesGenerated;
+
     // receives Builder object
     // and shallow copies it into a BoardController object
     private BoardController(Builder builder) {
@@ -18,6 +23,36 @@ public final class BoardController {
         this.whitePlayer = builder.whitePlayer;
         this.blackPlayer = builder.blackPlayer;
         this.currentPlayer = builder.currentPlayer;
+        haveLegalMovesGenerated = false;
+    }
+
+    public ArrayList<Move> getCurrentLegalMoves() {
+        if (haveLegalMovesGenerated)
+            return currentLegalMoves;
+
+        Player playingPlayer = this.currentPlayer.equals("WHITE") ? this.whitePlayer : this.blackPlayer;
+        ArrayList<Move> playingMoves = playingPlayer.getAllMoves();
+
+        for (Move playingMove : playingMoves) {
+            BoardController simulatedBoard = this.executeMove(playingMove);
+
+            Player otherPlayer = simulatedBoard.currentPlayer.equals("WHITE") ? simulatedBoard.whitePlayer
+                    : simulatedBoard.blackPlayer;
+            ArrayList<Move> otherMoves = otherPlayer.getAllMoves();
+
+            boolean isPlayingMoveLegal = true;
+            for (Move otherMove : otherMoves)
+                if (otherMove.attacksKing()) {
+                    isPlayingMoveLegal = false;
+                    break;
+                }
+
+            if (isPlayingMoveLegal)
+                currentLegalMoves.add(playingMove);
+        }
+
+        haveLegalMovesGenerated = true;
+        return currentLegalMoves;
     }
 
     // getters
@@ -58,17 +93,18 @@ public final class BoardController {
         // to create a fresh instance of Builder
         private Builder() {
             this.board = new Square[8][8];
-            this.whitePlayer = new Player(this.board, "WHITE");
-            this.blackPlayer = new Player(this.board, "BLACK");
             this.currentPlayer = "WHITE";
         }
 
         // receives BoardController object
-        // and shallow copies it into a Builder object
+        // and deep copies it into a Builder object
         private Builder(BoardController prevBoard) {
-            this.board = prevBoard.board;
-            this.whitePlayer = prevBoard.whitePlayer;
-            this.blackPlayer = prevBoard.blackPlayer;
+            Square[][] boardClone = new Square[8][8];
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                    boardClone[i][j] = prevBoard.board[i][j];
+
+            this.board = boardClone;
             this.currentPlayer = prevBoard.currentPlayer;
         }
 
@@ -107,6 +143,10 @@ public final class BoardController {
         // return immutable BoardController object
         // by making a shallow copy of the Builder object
         private BoardController build() {
+            // make sure whitePlayer and blackPlayer have all board updates
+            this.whitePlayer = new Player(this.board, "WHITE");
+            this.blackPlayer = new Player(this.board, "BLACK");
+
             return new BoardController(this);
         }
     }
