@@ -29,7 +29,28 @@ public abstract class Piece {
     public abstract List<Move> getAllMoves(Square[][] board);
 
     public static Piece createPiece(int rank, int file, String color, String piece) {
-        return null;
+        if(piece=="King") {
+        	Piece newpiece = new King(rank, file, color);
+        	return newpiece;
+        }
+        if(piece=="Knight") {
+        	Piece newpiece = new Knight(rank, file, color);
+        	return newpiece;
+        }
+        if(piece=="Queen") {
+        	Piece newpiece = new Queen(rank, file, color);
+        	return newpiece;
+        }
+        if(piece=="Rook") {
+        	Piece newpiece = new Rook(rank, file, color);
+        	return newpiece;
+        }
+        else {
+        	Piece newpiece = new Pawn(rank, file, color);
+        	return newpiece;
+        }
+        	
+        	
     }
 
 }
