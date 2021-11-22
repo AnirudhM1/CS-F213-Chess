@@ -41,7 +41,7 @@ public abstract class Piece {
         	return newpiece;
         }
         if(piece.equalsIgnoreCase("Bishop")) {
-        	Piece newpiece = new Queen(rank, file, color);
+        	Piece newpiece = new Bishop(rank, file, color);
         	return newpiece;
         }
         if(piece.equalsIgnoreCase("Rook")) {
