@@ -33,11 +33,11 @@ public class Knight extends Piece {
         Square endSquare = board[super.getRank()][super.getFile()];
         boolean checkNextMove = true;
         for (int i = -2; i <= +2; i += 4) {
-            if (super.getRank() + i <= 7) {
+            if (super.getRank() + i <= 7 && super.getRank() + i >= 0) {
                 endSquare = board[super.getRank() + i][super.getFile()];
             }
             for (int j = -1; j <= +1; j += 2) {
-                if (super.getFile() + j <= 7) {
+                if (super.getFile() + j <= 7 && super.getFile() + j >= 0) {
                     endSquare = board[super.getRank()][super.getFile() + j];
                 }
                 if (Check(endSquare)) {
@@ -46,12 +46,12 @@ public class Knight extends Piece {
             }
         }
         for (int i = -2; i <= +2; i += 4) {
-            if (super.getFile() + i <= 7) {
+            if (super.getFile() + i <= 7 && super.getFile() + i >= 0) {
                 endSquare = board[super.getRank()][super.getFile() + i];
             }
 
             for (int j = -1; j <= +1; j += 2) {
-                if (super.getRank() + j <= 7) {
+                if (super.getRank() + j <= 7 && super.getRank() + j >= 0) {
                     endSquare = board[super.getRank() + j][super.getFile()];
 
                 }
