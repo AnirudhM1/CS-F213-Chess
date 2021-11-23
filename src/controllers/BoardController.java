@@ -47,6 +47,45 @@ public final class BoardController {
         return builder.movePeice(move).togglePlayer().build();
     }
 
+    // To create an instance of BoardController from FEN String
+    // TODO check for errors in FEN String
+    public static BoardController createBoardFromFEN(String FEN) {
+        String[] fields = FEN.split(" ");
+        String piece_placement = fields[0];
+        String active_color = fields[1];
+        // String castling = fields[2];
+        // String enPassant = fields[3];
+        // String half_moves = fields[4];
+        // String full_moves = fields[5];
+
+        Builder builder = new Builder();
+
+        // For piece placement
+        int rank = 7;
+        for (String row : piece_placement.split("/")) {
+            int file = 0;
+            for (char c : row.toCharArray()) {
+                if (Character.isAlphabetic(c)) {
+                    String color = (Character.isUpperCase(c)) ? "WHITE" : "BLACK";
+                    Piece piece = Piece.createPiece(rank, file, color, String.valueOf(c));
+                    file++;
+                    builder.setPiece(piece);
+                } else if (Character.isDigit(c))
+                    file += Integer.parseInt(String.valueOf(c));
+                else {
+                    // TODO Error handling
+                }
+            }
+            rank--;
+        }
+
+        // For active color
+        String currentPlayerColor = (active_color.equals("w")) ? "WHITE" : "BLACK";
+        builder.setCurrentPlayer(currentPlayerColor);
+
+        return builder.build();
+    }
+
     // mutable Builder objects
     // used to build immutable BoardController objects
     private static class Builder {
