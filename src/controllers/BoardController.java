@@ -71,6 +71,39 @@ public final class BoardController {
             this.currentPlayer = prevBoard.currentPlayer;
         }
 
+        // Adds the given piece to the board
+        private Builder setPiece(Piece piece) {
+            if (piece == null)
+                throw new Error("BoardController.Builder.setPiece(Piece piece) cannot be passed null as a value");
+
+            int rank = piece.getRank();
+            int file = piece.getFile();
+            this.board[rank][file] = Square.createSquare(rank, file, piece);
+            return this;
+        }
+
+        // Removes the given piece from the board
+        private Builder removePiece(Piece piece) {
+            if (piece == null)
+                throw new Error("BoardController.Builder.removePiece(Piece piece) cannot be passed null as a value");
+
+            int rank = piece.getRank();
+            int file = piece.getFile();
+            this.board[rank][file] = Square.createSquare(rank, file, null);
+            return this;
+        }
+
+        // Sets the current player of the board
+        private Builder setCurrentPlayer(String color) {
+            if (color.equalsIgnoreCase("WHITE"))
+                this.currentPlayer = "WHITE";
+            else if (color.equalsIgnoreCase("BLACK"))
+                this.currentPlayer = "BLACK";
+            else
+                throw new Error("Invalid player color: " + color);
+            return this;
+        }
+
         // updates position of a peice on board, using a Move object
         private Builder movePeice(Move move) {
             Square startSquare = move.getStartSquare();
