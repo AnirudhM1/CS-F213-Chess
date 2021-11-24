@@ -72,10 +72,11 @@ public final class BoardController {
         return this.currentPlayer;
     }
 
-    // to create/initialize a fresh instance of BoardController
+    // to create/initialize an instance of BoardController, with the Pieces at their
+    // starting positions
     public static BoardController initialize() {
-        Builder builder = new Builder();
-        return builder.build();
+        final String initFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        return createBoardFromFEN(initFEN);
     }
 
     public BoardController executeMove(Move move) {
