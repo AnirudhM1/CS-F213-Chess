@@ -106,18 +106,18 @@ public final class BoardController {
 
         // updates position of a peice on board, using a Move object
         private Builder movePeice(Move move) {
-            Square startSquare = move.getStartSquare();
-            int startRank = startSquare.getRank();
-            int startFile = startSquare.getFile();
+            Piece oldPeice = move.getStartSquare().getPiece();
+            String color = oldPeice.getColor();
+            String name = oldPeice.getClass().getName();
 
             Square endSquare = move.getEndSquare();
             int endRank = endSquare.getRank();
             int endFile = endSquare.getFile();
 
-            Piece peiceToMove = startSquare.getPiece();
+            Piece newPeice = Piece.createPiece(endRank, endFile, color, name);
 
-            this.board[startRank][startFile] = new Square.EmptySquare(startRank, startFile);
-            this.board[endRank][endFile] = new Square.OccupiedSquare(endRank, endFile, peiceToMove);
+            this.removePiece(oldPeice);
+            this.setPiece(newPeice);
 
             return this;
         }
@@ -125,13 +125,12 @@ public final class BoardController {
         // to change the current playing player.
         // throws error if player is invalid.
         private Builder togglePlayer() throws Error {
-            if (this.currentPlayer.equals("WHITE")) {
-                this.currentPlayer = "BLACK";
-            } else if (this.currentPlayer.equals("BLACK")) {
-                this.currentPlayer = "WHITE";
-            } else {
+            if (this.currentPlayer.equals("WHITE"))
+                this.setCurrentPlayer("BLACK");
+            else if (this.currentPlayer.equals("BLACK"))
+                this.setCurrentPlayer("WHITE");
+            else
                 throw new Error("Invalid currentPlayer: \"" + this.currentPlayer + "\"");
-            }
 
             return this;
         }
