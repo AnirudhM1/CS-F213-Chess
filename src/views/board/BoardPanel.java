@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JComponent;
 
 import controllers.Updater;
+import models.Move;
 import models.Square;
 
 public class BoardPanel extends JPanel {
@@ -36,6 +37,20 @@ public class BoardPanel extends JPanel {
         setCells();
     }
 
+    public void clickedCell(Cell cell) {
+        if (selectedCell == null) {
+            selectedCell = cell;
+            cell.toggleHighlight();
+        } else if (selectedCell.equals(cell)) {
+            selectedCell = null;
+            cell.toggleHighlight();
+        } else {
+            selectedCell.toggleHighlight();
+            generateMove(cell);
+            selectedCell = null;
+        }
+    }
+
     private void setPanel() {
         setLayout(new GridLayout(8, 8));
         addComponentListener(new ComponentAdapter() {
@@ -49,13 +64,19 @@ public class BoardPanel extends JPanel {
     }
 
     private void setCells() {
-        for (int rank = 0; rank < 8; rank++) {
+        for (int rank = 7; rank >= 0; rank--) {
             for (int file = 0; file < 8; file++) {
                 Square sq = board[rank][file];
                 Cell cell = new Cell(this, sq);
                 add(cell);
+                cells[cell.hashCode()] = cell;
             }
         }
+    }
+
+    // This function is called by the Gui class to reset all clicks, etc
+    public void resetClicks() {
+        // TODO implement this function
     }
 
     private static void componentResize(JComponent outer, JComponent inner) {
@@ -71,6 +92,11 @@ public class BoardPanel extends JPanel {
 
         outer.revalidate();
 
+    }
+
+    private void generateMove(Cell cell) {
+        Move move = new Move(selectedCell.getSquare(), cell.getSquare());
+        updater.checkAndUpdate(move);
     }
 
 }

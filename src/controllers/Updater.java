@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Move;
 import models.Square;
 import views.Gui;
 
@@ -20,6 +21,15 @@ public class Updater {
         board = null; // Default board
         gui.setState(this, defaultBoard()); // We are using defaultBoard only for debugging purposes
         gui.run();
+    }
+
+    public void checkAndUpdate(Move move) {
+        gui.resetClicks();
+        if (true /* board.isMoveLegal(move) */) {
+            board = board.executeMove(move);
+            gui.setState(this, board.getBoard());
+            gui.addMove(move);
+        }
     }
 
     // This function is only used for debugging purposes.
