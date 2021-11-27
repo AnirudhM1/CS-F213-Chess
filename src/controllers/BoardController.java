@@ -13,6 +13,8 @@ public final class BoardController {
     private final Player whitePlayer, blackPlayer;
     private final String currentPlayer;
 
+    // ! do not access currentLegalMoves directly.
+    // ! use getCurrentLegalMoves() instead.
     private final ArrayList<Move> currentLegalMoves = new ArrayList<Move>();
     private boolean haveLegalMovesGenerated;
 
@@ -26,7 +28,7 @@ public final class BoardController {
         haveLegalMovesGenerated = false;
     }
 
-    public ArrayList<Move> getCurrentLegalMoves() {
+    private ArrayList<Move> getCurrentLegalMoves() {
         if (haveLegalMovesGenerated)
             return currentLegalMoves;
 
@@ -53,6 +55,15 @@ public final class BoardController {
 
         haveLegalMovesGenerated = true;
         return currentLegalMoves;
+    }
+
+    // check if a given move is legal or not
+    public boolean isMoveLegal(Move moveToCheck) {
+        for (Move legalMove : getCurrentLegalMoves())
+            if (legalMove.equals(moveToCheck))
+                return true;
+
+        return false;
     }
 
     // getters
