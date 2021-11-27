@@ -28,7 +28,7 @@ public final class BoardController {
         haveLegalMovesGenerated = false;
     }
 
-    private ArrayList<Move> getCurrentLegalMoves() {
+    public ArrayList<Move> getCurrentLegalMoves() {
         if (haveLegalMovesGenerated)
             return currentLegalMoves;
 
