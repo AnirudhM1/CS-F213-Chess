@@ -19,19 +19,33 @@ public class Player{
         
         this.board = board;
         this.color = color;
+        calculateAllPieces();
         calculateAllMoves();
     }
     
     private void calculateAllMoves() {
-        
+
         allMoves.clear();
-        
-        for(Piece piece : allPieces){
-            
+
+        for (Piece piece : allPieces) {
+
             allMoves.addAll(piece.getAllMoves(board));
-        
+
         }
-        
+
+    }
+
+    private void calculateAllPieces() {
+        allPieces.clear();
+
+        for (int rank = 0; rank < 8; rank++) {
+            for (int file = 0; file < 8; file++) {
+                Piece piece = board[rank][file].getPiece();
+
+                if (piece != null && piece.getColor().equals(this.color))
+                    allPieces.add(piece);
+            }
+        }
     }
 
     public boolean isInCheck(){
