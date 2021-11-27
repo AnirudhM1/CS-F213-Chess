@@ -144,6 +144,10 @@ public final class BoardController {
         // to create a fresh instance of Builder
         private Builder() {
             this.board = new Square[8][8];
+            for (int rank = 0; rank < 8; rank++)
+                for (int file = 0; file < 8; file++)
+                    this.board[rank][file] = Square.createSquare(rank, file, null);
+
             this.currentPlayer = "WHITE";
         }
 
