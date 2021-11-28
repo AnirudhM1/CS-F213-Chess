@@ -3,129 +3,124 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Rook extends Piece {
 
+    protected Rook(int rank, int file, String color) {
+        super(rank, file, color);
+    }
 
+    public boolean Check(Square End) {
+        if (End.getRank() >= 0 && End.getFile() >= 0 && End.getRank() <= 7 && End.getFile() <= 7) {
+            if (End.isOccupied()) {
+                if (this.getColor().equals(End.getPiece().getColor())) {
+                    return false;
+                } else {
+                    return true;
+                }
 
-	protected Rook(int rank, int file, String color) {
-		super(rank, file, color);
-	}
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
 
-	public boolean Check(Square End) {
-		if(End.getRank()>=0 && End.getFile()>=0 && End.getRank()<=7 && End.getFile()<=7) {
-			if(End.isOccupied()) {
-				if(this.getColor().equals(End.getPiece().getColor())) {
-					return false;
-				}
-				else {
-					return true;
-				}
+    @Override
+    public List<Move> getAllMoves(Square[][] board) {
 
-			}
-			else {
-				return true;
-			}
-		}
-		else {
-			return false;
-		}
-	}
+        List<Move> legalMoves = new ArrayList<>();
+        Square startSquare = Square.createSquare(super.getRank(), super.getFile(), this);
 
-	@Override
-	public List<Move> getAllMoves(Square[][] board) {
+        Square endSquare = board[super.getRank()][super.getFile()];
+        boolean checkNextMove = true;
+        while (checkNextMove == true) {
+            if (endSquare.getRank() + 1 >= 0 && endSquare.getRank() + 1 <= 7 &&
+                    endSquare.getFile() >= 0 && endSquare.getFile() <= 7) {
 
-		List<Move> legalMoves = new ArrayList<>();
-		Square startSquare = Square.createSquare(super.getRank(), super.getFile(),this);
+                endSquare = board[endSquare.getRank() + 1][endSquare.getFile()];
+            }
 
-		Square endSquare = board[super.getRank()][ super.getFile()];
-		boolean checkNextMove=true;
-		while(checkNextMove==true)
-		{
-			if(endSquare.getRank()+1>=0 && endSquare.getRank()+1<=7 &&
-					endSquare.getFile()>=0 && endSquare.getFile()<=7){
+            if (Check(endSquare)) {
+                legalMoves.add(new Move(startSquare, endSquare));
+                if (endSquare.isOccupied()) {
+                    checkNextMove = false;
+                }
 
-			endSquare = board[endSquare.getRank() + 1][endSquare.getFile()];
-			}
+            } else {
+                checkNextMove = false;
+            }
+        }
 
-			if(Check(endSquare)) {
-				legalMoves.add(new Move(startSquare, endSquare));
-				if(endSquare.isOccupied()){
-					checkNextMove=false;
-				}
+        endSquare = board[super.getRank()][super.getFile()];
+        checkNextMove = true;
+        while (checkNextMove == true) {
+            if (endSquare.getRank() - 1 >= 0 && endSquare.getRank() - 1 <= 7 &&
+                    endSquare.getFile() >= 0 && endSquare.getFile() <= 7) {
 
-			}
-			else{
-				checkNextMove=false;
-			}
-		}
+                endSquare = board[endSquare.getRank() - 1][endSquare.getFile()];
+            }
+            if (Check(endSquare)) {
+                legalMoves.add(new Move(startSquare, endSquare));
+                if (endSquare.isOccupied()) {
+                    checkNextMove = false;
+                }
+            } else {
+                checkNextMove = false;
+            }
+        }
 
-		endSquare = board[super.getRank()][ super.getFile()];
-		checkNextMove=true;
-		while(checkNextMove==true)
-		{
-			if(endSquare.getRank()-1>=0 && endSquare.getRank()-1<=7 &&
-					endSquare.getFile()>=0 && endSquare.getFile()<=7){
+        endSquare = board[super.getRank()][super.getFile()];
+        checkNextMove = true;
+        while (checkNextMove == true) {
+            if (endSquare.getRank() >= 0 && endSquare.getRank() <= 7 &&
+                    endSquare.getFile() + 1 >= 0 && endSquare.getFile() + 1 <= 7) {
 
-			endSquare = board[endSquare.getRank() - 1][endSquare.getFile()];
-		}
-			if(Check(endSquare)) {
-				legalMoves.add(new Move(startSquare, endSquare));
-				if(endSquare.isOccupied()){
-					checkNextMove=false;
-				}
-			}
-			else{
-				checkNextMove=false;
-			}
-		}
+                endSquare = board[super.getRank()][super.getFile() + 1];
+            }
 
-		endSquare = board[super.getRank()][ super.getFile()];
-		checkNextMove=true;
-		while(checkNextMove==true)
-		{
-			if(endSquare.getRank()>=0 && endSquare.getRank()<=7 &&
-					endSquare.getFile()+1>=0 && endSquare.getFile()+1<=7){
+            if (Check(endSquare)) {
+                legalMoves.add(new Move(startSquare, endSquare));
+                if (endSquare.isOccupied()) {
+                    checkNextMove = false;
+                }
 
-			endSquare = board[super.getRank()][ super.getFile()+1];
-			}
+            } else {
+                checkNextMove = false;
+            }
+        }
 
-			if(Check(endSquare)) {
-				legalMoves.add(new Move(startSquare, endSquare));
-				if(endSquare.isOccupied()){
-					checkNextMove=false;
-				}
+        endSquare = board[super.getRank()][super.getFile()];
+        checkNextMove = true;
+        while (checkNextMove == true) {
+            if (endSquare.getRank() >= 0 && endSquare.getRank() <= 7 &&
+                    endSquare.getFile() - 1 >= 0 && endSquare.getFile() - 1 <= 7) {
 
-			}
-			else{
-				checkNextMove=false;
-			}
-		}
+                endSquare = board[super.getRank()][super.getFile() - 1];
+            }
 
-		endSquare = board[super.getRank()][ super.getFile()];
-		checkNextMove=true;
-		while(checkNextMove==true)
-		{
-			if(endSquare.getRank()>=0 && endSquare.getRank()<=7 &&
-					endSquare.getFile()-1>=0 && endSquare.getFile()-1<=7){
+            if (Check(endSquare)) {
+                legalMoves.add(new Move(startSquare, endSquare));
+                if (endSquare.isOccupied()) {
+                    checkNextMove = false;
+                }
 
-				endSquare = board[super.getRank()][ super.getFile()-1];
-			}
+            } else {
+                checkNextMove = false;
+            }
+        }
 
-			if(Check(endSquare)) {
-				legalMoves.add(new Move(startSquare, endSquare));
-				if(endSquare.isOccupied()){
-					checkNextMove=false;
-				}
+        return legalMoves;
 
-			}
-			else{
-				checkNextMove=false;
-			}
-		}
+    }
 
-		return legalMoves;
-
-	}
+    @Override
+    public String toString() {
+        String piece_name = "r";
+        // piece_name is capital if color is white
+        if (getColor().equalsIgnoreCase("WHITE"))
+            piece_name = piece_name.toUpperCase();
+        return piece_name;
+    }
 
 }

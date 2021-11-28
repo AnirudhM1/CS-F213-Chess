@@ -63,4 +63,13 @@ public class Knight extends Piece {
         return legalMoves;
     }
 
+    @Override
+    public String toString() {
+        String piece_name = "n";
+        // piece_name is capital if color is white
+        if (getColor().equalsIgnoreCase("WHITE"))
+            piece_name = piece_name.toUpperCase();
+        return piece_name;
+    }
+
 }
