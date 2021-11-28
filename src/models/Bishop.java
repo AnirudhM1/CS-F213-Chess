@@ -77,7 +77,8 @@ public class Bishop extends Piece {
 
             if (Check(endSquare) == true) {
                 legalMoves.add(new Move(startSquare, endSquare));
-            }
+            } else
+                break;
             toX--;
             toY--;
         }
@@ -87,7 +88,8 @@ public class Bishop extends Piece {
             Square endSquare = board[toX1][toY1];
             if (Check(endSquare) == true) {
                 legalMoves.add(new Move(startSquare, endSquare));
-            }
+            } else
+                break;
             toX1++;
             toY1++;
         }
@@ -98,7 +100,8 @@ public class Bishop extends Piece {
             Square endSquare = board[toX2][toY2];
             if (Check(endSquare) == true) {
                 legalMoves.add(new Move(startSquare, endSquare));
-            }
+            } else
+                break;
             toX2--;
             toY2++;
         }
@@ -109,7 +112,8 @@ public class Bishop extends Piece {
             Square endSquare = board[toX3][toY3];
             if (Check(endSquare) == true) {
                 legalMoves.add(new Move(startSquare, endSquare));
-            }
+            } else
+                break;
             toX3++;
             toY3--;
         }
