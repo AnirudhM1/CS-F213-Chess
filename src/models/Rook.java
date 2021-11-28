@@ -123,4 +123,9 @@ public class Rook extends Piece {
         return piece_name;
     }
 
+    public String getImgUrl() {
+        String color = this.getColor().substring(0, 1).toUpperCase();
+        return color + "R";
+    }
+
 }

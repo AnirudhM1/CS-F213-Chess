@@ -175,4 +175,9 @@ public class Pawn extends Piece {
             piece_name = piece_name.toUpperCase();
         return piece_name;
     }
+
+    public String getImgUrl() {
+        String color = this.getColor().substring(0, 1).toUpperCase();
+        return color + "P";
+    }
 }

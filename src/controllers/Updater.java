@@ -18,14 +18,14 @@ public class Updater {
     }
 
     public void start() {
-        board = null; // Default board
-        gui.setState(this, defaultBoard()); // We are using defaultBoard only for debugging purposes
+        board = BoardController.initialize(); // Default board
+        gui.setState(this, board.getBoard()); // We are using defaultBoard only for debugging purposes
         gui.run();
     }
 
     public void checkAndUpdate(Move move) {
         gui.resetClicks();
-        if (true /* board.isMoveLegal(move) */) {
+        if (board.isMoveLegal(move)) {
             board = board.executeMove(move);
             gui.setState(this, board.getBoard());
             gui.addMove(move);
