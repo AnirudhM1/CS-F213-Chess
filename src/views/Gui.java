@@ -104,8 +104,12 @@ public class Gui {
 
     // Updater class calls this method to set the state of the gui
     public void setState(Updater updater, Square[][] board) {
+        // Remove existing boardPanel if there is one and replace is with a new one
+        outerBoardPanel.removeAll();
         boardPanel = new BoardPanel(outerBoardPanel, updater, board);
         outerBoardPanel.add(boardPanel);
+        outerBoardPanel.repaint();
+        outerBoardPanel.revalidate();
     }
 
     // This method resets all the highlighted squares, etc. in the board panel class
@@ -117,8 +121,4 @@ public class Gui {
         // TODO Add move to the move list
     }
 
-    public static void main(String[] args) {
-        Gui gui = new Gui();
-        gui.run();
-    }
 }
