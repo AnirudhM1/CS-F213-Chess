@@ -10,7 +10,7 @@ public class Pawn extends Piece {
     protected Pawn(int rank, int file, String color) {
         super(rank, file, color);
 
-        if ((rank == 2 && color.equalsIgnoreCase("White")) || (rank == 7 && color.equalsIgnoreCase("Black"))) {
+        if ((rank == 1 && color.equalsIgnoreCase("White")) || (rank == 6 && color.equalsIgnoreCase("Black"))) {
             wasMoved = false;
         }
 
