@@ -66,4 +66,9 @@ public abstract class Square {
     public boolean equals(Square square) {
         return this.rank == square.rank && this.file == square.file;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf((char) ('a' + file)) + (rank + 1);
+    }
 }

@@ -27,4 +27,11 @@ public class Move {
     public boolean equals(Move moveObj) {
         return this.startSquare.equals(moveObj.startSquare) && this.endSquare.equals(moveObj.endSquare);
     }
+
+    @Override
+    public String toString() {
+        String startSquare = this.startSquare.toString();
+        String endSquare = this.endSquare.toString();
+        return startSquare + " " + endSquare;
+    }
 }
