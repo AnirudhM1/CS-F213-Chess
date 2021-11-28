@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
@@ -32,8 +34,19 @@ public class Cell extends JPanel implements MouseInputListener {
         setBackground(defaultColor);
         highlighted = false;
 
+        addImage();
+
         addMouseListener(this);
 
+    }
+
+    private void addImage() {
+        if (this.square.isOccupied()) {
+            String complete_url = "assets/" + square.getPiece().getImgUrl() + ".png";
+            ImageIcon icon = new ImageIcon(complete_url);
+            JLabel image_label = new JLabel(icon);
+            add(image_label);
+        }
     }
 
     public void toggleHighlight() {
