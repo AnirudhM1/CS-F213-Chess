@@ -220,13 +220,13 @@ public final class BoardController {
         private Builder movePeice(Move move) {
             Piece oldPeice = move.getStartSquare().getPiece();
             String color = oldPeice.getColor();
-            String name = oldPeice.getClass().getName();
+            String name = oldPeice.toString();
 
             Square endSquare = move.getEndSquare();
             int endRank = endSquare.getRank();
             int endFile = endSquare.getFile();
 
-            Piece newPeice = Piece.createPiece(endRank, endFile, color, name);
+            Piece newPeice = Piece.createPiece(endRank, endFile, color, getPieceName(name.charAt(0)));
 
             this.removePiece(oldPeice);
             this.setPiece(newPeice);

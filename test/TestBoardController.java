@@ -34,8 +34,8 @@ public class TestBoardController {
         assertTrue("e4 is occupied", board.getBoard()[3][4].isOccupied());
 
         // Check the total number of moves possible
-        // assertEquals("20 moves are possible", 20,
-        // board.getCurrentLegalMoves().size());
+        assertEquals("20 moves are possible", 20,
+                board.getCurrentLegalMoves().size());
 
         // Check current player
         assertEquals("Black's turn", "BLACK", board.getCurrentPlayer().toUpperCase());
@@ -59,7 +59,7 @@ public class TestBoardController {
         assertEquals("Current player is white", "WHITE", executedBoard.getCurrentPlayer().toUpperCase());
 
         // Check number of moves
-        // assertEquals(18, executedBoard.getCurrentLegalMoves().size());
+        assertEquals(25, executedBoard.getCurrentLegalMoves().size());
 
         // Check Pieces
         assertFalse("e7 is empty", executedBoard.getBoard()[6][4].isOccupied());
