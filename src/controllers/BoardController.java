@@ -115,7 +115,7 @@ public final class BoardController {
             for (char c : row.toCharArray()) {
                 if (Character.isAlphabetic(c)) {
                     String color = (Character.isUpperCase(c)) ? "WHITE" : "BLACK";
-                    Piece piece = Piece.createPiece(rank, file, color, String.valueOf(c));
+                    Piece piece = Piece.createPiece(rank, file, color, getPieceName(c));
                     file++;
                     builder.setPiece(piece);
                 } else if (Character.isDigit(c))
@@ -132,6 +132,26 @@ public final class BoardController {
         builder.setCurrentPlayer(currentPlayerColor);
 
         return builder.build();
+    }
+
+    private static String getPieceName(char c) {
+        c = Character.toUpperCase(c);
+        switch (c) {
+            case 'P':
+                return "PAWN";
+            case 'R':
+                return "ROOK";
+            case 'Q':
+                return "QUEEN";
+            case 'K':
+                return "KING";
+            case 'B':
+                return "BISHOP";
+            case 'N':
+                return "KNIGHT";
+            default:
+                throw new Error("Invalid piece character: " + c);
+        }
     }
 
     // mutable Builder objects
