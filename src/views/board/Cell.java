@@ -126,6 +126,8 @@ public class Cell extends JPanel implements MouseInputListener {
 
     @Override
     public boolean equals(Object cellObj) {
+        if (!(cellObj instanceof Cell))
+            return false;
         Cell cell = (Cell) cellObj;
         return this.square.equals(cell.square);
     }

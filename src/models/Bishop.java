@@ -37,7 +37,7 @@ public class Bishop extends Piece {
         if (toX < 0 || toX > 7 || fromX < 0 || fromX > 7 || toY < 0 || toY > 7 || fromY < 0 || fromY > 7)
             return false;
 
-        if (toX - fromX == toY - fromY)
+        if (toX - fromX == toY - fromY || toX - fromX == fromY - toY)
             return true;
 
         return false;
