@@ -39,7 +39,8 @@ public class Rook extends Piece {
                     endSquare.getFile() >= 0 && endSquare.getFile() <= 7) {
 
                 endSquare = board[endSquare.getRank() + 1][endSquare.getFile()];
-            }
+            } else
+                break;
 
             if (Check(endSquare)) {
                 legalMoves.add(new Move(startSquare, endSquare));
@@ -59,7 +60,8 @@ public class Rook extends Piece {
                     endSquare.getFile() >= 0 && endSquare.getFile() <= 7) {
 
                 endSquare = board[endSquare.getRank() - 1][endSquare.getFile()];
-            }
+            } else
+                break;
             if (Check(endSquare)) {
                 legalMoves.add(new Move(startSquare, endSquare));
                 if (endSquare.isOccupied()) {
@@ -77,7 +79,8 @@ public class Rook extends Piece {
                     endSquare.getFile() + 1 >= 0 && endSquare.getFile() + 1 <= 7) {
 
                 endSquare = board[endSquare.getRank()][endSquare.getFile() + 1];
-            }
+            } else
+                break;
 
             if (Check(endSquare)) {
                 legalMoves.add(new Move(startSquare, endSquare));
@@ -97,7 +100,8 @@ public class Rook extends Piece {
                     endSquare.getFile() - 1 >= 0 && endSquare.getFile() - 1 <= 7) {
 
                 endSquare = board[endSquare.getRank()][endSquare.getFile() - 1];
-            }
+            } else
+                break;
 
             if (Check(endSquare)) {
                 legalMoves.add(new Move(startSquare, endSquare));
