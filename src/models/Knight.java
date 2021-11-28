@@ -63,4 +63,10 @@ public class Knight extends Piece {
         return legalMoves;
     }
 
+    @Override
+    public String getImgUrl() {
+        String color = this.getColor().substring(0, 1).toUpperCase();
+        return color + "N";
+    }
+
 }
