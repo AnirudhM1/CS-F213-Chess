@@ -76,7 +76,7 @@ public class Rook extends Piece {
             if (endSquare.getRank() >= 0 && endSquare.getRank() <= 7 &&
                     endSquare.getFile() + 1 >= 0 && endSquare.getFile() + 1 <= 7) {
 
-                endSquare = board[super.getRank()][super.getFile() + 1];
+                endSquare = board[endSquare.getRank()][endSquare.getFile() + 1];
             }
 
             if (Check(endSquare)) {
@@ -96,7 +96,7 @@ public class Rook extends Piece {
             if (endSquare.getRank() >= 0 && endSquare.getRank() <= 7 &&
                     endSquare.getFile() - 1 >= 0 && endSquare.getFile() - 1 <= 7) {
 
-                endSquare = board[super.getRank()][super.getFile() - 1];
+                endSquare = board[endSquare.getRank()][endSquare.getFile() - 1];
             }
 
             if (Check(endSquare)) {

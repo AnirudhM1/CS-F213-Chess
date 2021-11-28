@@ -31,32 +31,33 @@ public class Knight extends Piece {
         List<Move> legalMoves = new ArrayList<>();
         Square startSquare = Square.createSquare(super.getRank(), super.getFile(), this);
         Square endSquare = board[super.getRank()][super.getFile()];
-        boolean checkNextMove = true;
+
         for (int i = -2; i <= +2; i += 4) {
-            if (super.getRank() + i <= 7 && super.getRank() + i >= 0) {
-                endSquare = board[super.getRank() + i][super.getFile()];
-            }
-            for (int j = -1; j <= +1; j += 2) {
-                if (super.getFile() + j <= 7 && super.getFile() + j >= 0) {
-                    endSquare = board[super.getRank()][super.getFile() + j];
-                }
-                if (Check(endSquare)) {
-                    legalMoves.add(new Move(startSquare, endSquare));
+            int nextRank = super.getRank() + i;
+            if (nextRank <= 7 && nextRank >= 0) {
+                for (int j = -1; j <= +1; j += 2) {
+                    int nextFile = super.getFile() + j;
+                    if (nextFile <= 7 && nextFile >= 0) {
+                        endSquare = board[nextRank][nextFile];
+                        if (Check(endSquare)) {
+                            legalMoves.add(new Move(startSquare, endSquare));
+                        }
+                    }
                 }
             }
         }
         for (int i = -2; i <= +2; i += 4) {
-            if (super.getFile() + i <= 7 && super.getFile() + i >= 0) {
-                endSquare = board[super.getRank()][super.getFile() + i];
-            }
+            int nextFile = super.getFile() + i;
+            if (nextFile <= 7 && nextFile >= 0) {
+                for (int j = -1; j <= +1; j += 2) {
+                    int nextRank = super.getRank() + j;
+                    if (nextRank <= 7 && nextRank >= 0) {
+                        endSquare = board[nextRank][nextFile];
 
-            for (int j = -1; j <= +1; j += 2) {
-                if (super.getRank() + j <= 7 && super.getRank() + j >= 0) {
-                    endSquare = board[super.getRank() + j][super.getFile()];
-
-                }
-                if (Check(endSquare)) {
-                    legalMoves.add(new Move(startSquare, endSquare));
+                        if (Check(endSquare)) {
+                            legalMoves.add(new Move(startSquare, endSquare));
+                        }
+                    }
                 }
             }
         }
