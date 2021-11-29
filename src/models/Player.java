@@ -15,7 +15,7 @@ public class Player {
     private final ArrayList<Move> allMoves;
     private final ArrayList<Move> allOpponentMoves;
 
-    // Fields to indicicate castling
+    // Fields to indicate castling
     // These fields only indicate whether the respective pieces have moved or not.
     // They don't check for other conditions required.
     private final boolean whiteKingSideCastleAllowed;
@@ -113,12 +113,93 @@ public class Player {
         return this.color;
 
     }
-
-    private void addCastleMove() {
-
+    
+    //-
+    private King findKing() {
+        for(Piece piece:allPieces){
+            if (((piece.getFile()==4 && piece.getRank()==0) || (piece.getFile()==4 && piece.getRank()==7) ) && (piece.toString().equalsIgnoreCase("K"))){
+                return (King)piece;
+            }
+        }
+        return null;
+        
+    }
+    //Rook1 is for long castle('a' rook)
+    private Rook findRook1(){
+        for(Piece piece:allPieces){
+            if (((piece.getFile()==0 && piece.getRank()==0) || (piece.getFile()==0 && piece.getRank()==7) ) && (piece.toString().equalsIgnoreCase("R"))) {
+                return (Rook)piece;
+            }
+        }
+        return null;
+        
     }
 
-    private void addEnPassentMove() {
+    private Rook findRook2() {
+        for(Piece piece:allPieces){
+            if (((piece.getFile()==7 && piece.getRank()==0) || (piece.getFile()==7 && piece.getRank()==7) ) && (piece.toString().equalsIgnoreCase("R"))) {
+                return (Rook)piece;
+            }
+        }
+        return null;
+    }
+
+    public boolean underAttack(Square square) {
+        for(Move move : allOpponentMoves){
+            if (move.getEndSquare()==square){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
+
+    private void addCastleMove(){
+        King king = findKing();
+        Rook rook1= findRook1(); 
+        Rook rook2= findRook2();
+        //rook1 is for long castle('a'rook) and rook2 ('h' rook) is for short castle
+
+        //short castle for white king
+        if (whiteKingSideCastleAllowed){
+            Square startSquareK = Square.createSquare(0,4,king);
+            if (underAttack(board[4][0])==false && underAttack(board[0][5])==false && (board[0][5]).isOccupied()==false  && underAttack(board[0][6])==false && (board[0][6]).isOccupied()==false) {
+                Square endSquareK = board[0][6];
+                allMoves.add(new Move(startSquareK, endSquareK));//add king move
+            }
+        }
+        
+        //short castle for Black king
+        if (blackKingSideCastleAllowed){
+            Square startSquareK = Square.createSquare(7,4,king);
+            if (underAttack(board[4][7])==false && underAttack(board[7][5])==false && (board[7][5]).isOccupied()==false  && underAttack(board[7][6])==false && (board[7][6]).isOccupied()==false) {
+                Square endSquareK = board[7][6];
+                allMoves.add(new Move(startSquareK, endSquareK));//add king move    
+            }
+        }
+        
+        //long castle for White king
+        if (whiteQueenSideCastleAllowed){
+            Square startSquareK = Square.createSquare(0,4,king);
+            if (underAttack(board[4][0])==false && underAttack(board[0][3])==false && (board[0][3]).isOccupied()==false  && underAttack(board[0][2])==false && (board[0][2]).isOccupied()==false) {
+                Square endSquareK = board[0][2];
+                allMoves.add(new Move(startSquareK, endSquareK));//add king move  
+            }
+        }
+        
+        //long castle for Black king
+        if (blackQueenSideCastleAllowed){
+            Square startSquareK = Square.createSquare(7,4,king);
+            if (underAttack(board[7][4])==false && underAttack(board[7][3])==false && (board[7][3]).isOccupied()==false  && underAttack(board[7][2])==false && (board[7][2]).isOccupied()==false) {
+                Square endSquareK = board[7][2];
+                allMoves.add(new Move(startSquareK, endSquareK));//add king move
+            }
+        }
+
+    }
+    //-
+    private void addEnPassantMove() {
 
     }
 
