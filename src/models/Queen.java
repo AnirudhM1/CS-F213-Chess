@@ -26,7 +26,7 @@ public class Queen extends Piece {
         Square startSquare = board[super.getRank()][super.getFile()];
         Square endSquare = board[super.getRank()][super.getFile()];
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             int x = super.getRank() + i;
             int y = super.getFile();
             if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -34,11 +34,15 @@ public class Queen extends Piece {
                 endSquare = board[x][y];
                 if (Check(endSquare)) {
                     legalMoves.add(new Move(startSquare, endSquare));
+
+                    // Check() guarantees that the occupying peice is an enemy peice
+                    if (endSquare.isOccupied())
+                        break;
                 } else
                     break;
             }
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             int x = super.getRank() - i;
             int y = super.getFile();
             if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -46,11 +50,15 @@ public class Queen extends Piece {
                 endSquare = board[x][y];
                 if (Check(endSquare)) {
                     legalMoves.add(new Move(startSquare, endSquare));
+
+                    // Check() guarantees that the occupying peice is an enemy peice
+                    if (endSquare.isOccupied())
+                        break;
                 } else
                     break;
             }
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             int x = super.getRank();
             int y = super.getFile() - i;
             if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -58,12 +66,16 @@ public class Queen extends Piece {
                 endSquare = board[x][y];
                 if (Check(endSquare)) {
                     legalMoves.add(new Move(startSquare, endSquare));
+
+                    // Check() guarantees that the occupying peice is an enemy peice
+                    if (endSquare.isOccupied())
+                        break;
                 } else
                     break;
             }
         }
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             int x = super.getRank();
             int y = super.getFile() + i;
             if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -71,11 +83,15 @@ public class Queen extends Piece {
                 endSquare = board[x][y];
                 if (Check(endSquare)) {
                     legalMoves.add(new Move(startSquare, endSquare));
+
+                    // Check() guarantees that the occupying peice is an enemy peice
+                    if (endSquare.isOccupied())
+                        break;
                 } else
                     break;
             }
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             int x = super.getRank() + i;
             int y = super.getFile() + i;
             if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -83,11 +99,15 @@ public class Queen extends Piece {
                 endSquare = board[x][y];
                 if (Check(endSquare)) {
                     legalMoves.add(new Move(startSquare, endSquare));
+
+                    // Check() guarantees that the occupying peice is an enemy peice
+                    if (endSquare.isOccupied())
+                        break;
                 } else
                     break;
             }
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             int x = super.getRank() + i;
             int y = super.getFile() - i;
             if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -95,11 +115,15 @@ public class Queen extends Piece {
                 endSquare = board[x][y];
                 if (Check(endSquare)) {
                     legalMoves.add(new Move(startSquare, endSquare));
+
+                    // Check() guarantees that the occupying peice is an enemy peice
+                    if (endSquare.isOccupied())
+                        break;
                 } else
                     break;
             }
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             int x = super.getRank() - i;
             int y = super.getFile() + i;
             if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -107,11 +131,15 @@ public class Queen extends Piece {
                 endSquare = board[x][y];
                 if (Check(endSquare)) {
                     legalMoves.add(new Move(startSquare, endSquare));
+
+                    // Check() guarantees that the occupying peice is an enemy peice
+                    if (endSquare.isOccupied())
+                        break;
                 } else
                     break;
             }
         }
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             int x = super.getRank() - i;
             int y = super.getFile() - i;
             if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -119,6 +147,10 @@ public class Queen extends Piece {
                 endSquare = board[x][y];
                 if (Check(endSquare)) {
                     legalMoves.add(new Move(startSquare, endSquare));
+
+                    // Check() guarantees that the occupying peice is an enemy peice
+                    if (endSquare.isOccupied())
+                        break;
                 } else
                     break;
             }
