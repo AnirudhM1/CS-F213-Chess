@@ -18,13 +18,31 @@ public final class BoardController {
     private final ArrayList<Move> currentLegalMoves = new ArrayList<Move>();
     private boolean haveLegalMovesGenerated;
 
+    // Fields to indicicate castling
+    // These fields only indicate whether the respective pieces have moved or not.
+    // They don't check for other conditions required.
+    private final boolean whiteKingSideCastleAllowed;
+    private final boolean whiteQueenSideCastleAllowed;
+    private final boolean blackKingSideCastleAllowed;
+    private final boolean blackQueenSideCastleAllowed;
+
+    // Field to set enPassantSquare
+    private final Square enPassantSquare;
+
     // receives Builder object
     // and shallow copies it into a BoardController object
     private BoardController(Builder builder) {
         this.board = builder.board;
-        this.whitePlayer = builder.whitePlayer;
-        this.blackPlayer = builder.blackPlayer;
+        // this.whitePlayer = builder.whitePlayer;
+        // this.blackPlayer = builder.blackPlayer;
         this.currentPlayer = builder.currentPlayer;
+        this.whiteKingSideCastleAllowed = builder.whiteKingSideCastleAllowed;
+        this.whiteQueenSideCastleAllowed = builder.whiteQueenSideCastleAllowed;
+        this.blackKingSideCastleAllowed = builder.blackKingSideCastleAllowed;
+        this.blackQueenSideCastleAllowed = builder.blackQueenSideCastleAllowed;
+        this.enPassantSquare = builder.enPassantSquare;
+        this.whitePlayer = new Player(this, "WHITE");
+        this.blackPlayer = new Player(this, "BLACK");
         haveLegalMovesGenerated = false;
     }
 
@@ -83,6 +101,26 @@ public final class BoardController {
         return this.currentPlayer;
     }
 
+    public boolean isWhiteKingCastleAllowed() {
+        return whiteKingSideCastleAllowed;
+    }
+
+    public boolean isBlackKingCastleAllowed() {
+        return whiteKingSideCastleAllowed;
+    }
+
+    public boolean isWhiteQueenCastleAllowed() {
+        return whiteKingSideCastleAllowed;
+    }
+
+    public boolean isBlackQueenCastleAllowed() {
+        return whiteKingSideCastleAllowed;
+    }
+
+    public Square getEnPassentSquare() {
+        return enPassantSquare;
+    }
+
     // to create/initialize an instance of BoardController, with the Pieces at their
     // starting positions
     public static BoardController initialize() {
@@ -101,8 +139,8 @@ public final class BoardController {
         String[] fields = FEN.split(" ");
         String piece_placement = fields[0];
         String active_color = fields[1];
-        // String castling = fields[2];
-        // String enPassant = fields[3];
+        String castling = fields[2];
+        String enPassant = fields[3];
         // String half_moves = fields[4];
         // String full_moves = fields[5];
 
@@ -131,7 +169,40 @@ public final class BoardController {
         String currentPlayerColor = (active_color.equals("w")) ? "WHITE" : "BLACK";
         builder.setCurrentPlayer(currentPlayerColor);
 
+        // For castling
+        setCastlingFieldsFEN(builder, castling);
+
+        // for en-passant
+        // variable enPassant is of the form: e4, h8 etc.
+        if (enPassant.equals("-")) {
+            builder.setEnPassantSquare(null);
+        } else {
+            int enPassantFile = enPassant.charAt(0) - 'a';
+            int enPassantRank = Integer.parseInt(enPassant.substring(1));
+            Square enPassantSquare = Square.createSquare(enPassantRank, enPassantFile, null);
+            builder.setEnPassantSquare(enPassantSquare);
+        }
+
         return builder.build();
+    }
+
+    private static void setCastlingFieldsFEN(Builder builder, String castlingFEN) {
+        builder.setAllCastlingFieldsToFalse();
+        for (char c : castlingFEN.toCharArray()) {
+            switch (c) {
+                case 'k':
+                    builder.setKingSideCastling("BLACK");
+                    break;
+                case 'K':
+                    builder.setKingSideCastling("WHITE");
+                    break;
+                case 'q':
+                    builder.setQueenSideCastling("BLACK");
+                    break;
+                case 'Q':
+                    builder.setQueenSideCastling("WHITE");
+            }
+        }
     }
 
     private static String getPieceName(char c) {
@@ -156,10 +227,21 @@ public final class BoardController {
 
     // mutable Builder objects
     // used to build immutable BoardController objects
-    private static class Builder {
+    public static class Builder {
         private Square[][] board;
-        private Player whitePlayer, blackPlayer;
+        // private Player whitePlayer, blackPlayer;
         private String currentPlayer;
+
+        // Fields to indicicate castling
+        // These fields only indicate whether the respective pieces have moved or not.
+        // They don't check for other conditions required.
+        private boolean whiteKingSideCastleAllowed;
+        private boolean whiteQueenSideCastleAllowed;
+        private boolean blackKingSideCastleAllowed;
+        private boolean blackQueenSideCastleAllowed;
+
+        // Field to set enPassantSquare
+        private Square enPassantSquare;
 
         // to create a fresh instance of Builder
         private Builder() {
@@ -181,6 +263,37 @@ public final class BoardController {
 
             this.board = boardClone;
             this.currentPlayer = prevBoard.currentPlayer;
+            this.whiteKingSideCastleAllowed = prevBoard.whiteKingSideCastleAllowed;
+            this.whiteQueenSideCastleAllowed = prevBoard.whiteQueenSideCastleAllowed;
+            this.blackKingSideCastleAllowed = prevBoard.blackKingSideCastleAllowed;
+            this.blackQueenSideCastleAllowed = prevBoard.blackQueenSideCastleAllowed;
+            this.enPassantSquare = prevBoard.enPassantSquare;
+        }
+
+        // Getters
+
+        public Square[][] getBoard() {
+            return board;
+        }
+
+        public boolean isWhiteKingCastleAllowed() {
+            return whiteKingSideCastleAllowed;
+        }
+
+        public boolean isBlackKingCastleAllowed() {
+            return whiteKingSideCastleAllowed;
+        }
+
+        public boolean isWhiteQueenCastleAllowed() {
+            return whiteKingSideCastleAllowed;
+        }
+
+        public boolean isBlackQueenCastleAllowed() {
+            return whiteKingSideCastleAllowed;
+        }
+
+        public Square getEnPassentSquare() {
+            return enPassantSquare;
         }
 
         // Adds the given piece to the board
@@ -231,7 +344,115 @@ public final class BoardController {
             this.removePiece(oldPeice);
             this.setPiece(newPeice);
 
+            setCastlingFields(move);
+            setEnPassantFields(move);
+
             return this;
+        }
+
+        // Sets all castling fields to false
+        private void setAllCastlingFieldsToFalse() {
+            whiteKingSideCastleAllowed = false;
+            whiteQueenSideCastleAllowed = false;
+            blackKingSideCastleAllowed = false;
+            blackQueenSideCastleAllowed = false;
+        }
+
+        // This method sets the respective castling fields and also changes the board
+        // state to accomadate special moves
+        private void setCastlingFields(Move move) {
+            Square startSquare = move.getStartSquare();
+            Square endSquare = move.getEndSquare();
+            Piece piece = startSquare.getPiece();
+
+            // If piece is a king
+            if (piece.toString().equalsIgnoreCase("K")) {
+                // If white
+                if (piece.getColor().equalsIgnoreCase("WHITE")) {
+                    whiteKingSideCastleAllowed = false;
+                    whiteQueenSideCastleAllowed = false;
+                }
+                // If black
+                else {
+                    blackKingSideCastleAllowed = false;
+                    blackQueenSideCastleAllowed = false;
+                }
+
+                // Checking if the king has castled
+                if (move.hasMovedTwoSteps()) {
+                    int rookRank = piece.getRank();
+                    int rookFile = (startSquare.getFile() + endSquare.getFile()) / 2;
+                    Piece newPiece = Piece.createPiece(rookRank, rookFile, piece.getColor(), "ROOK");
+                    Piece oldPeice;
+                    if (endSquare.getFile() == 6)
+                        oldPeice = Piece.createPiece(endSquare.getRank(), 7, piece.getColor(), "ROOK");
+                    else if (endSquare.getFile() == 2)
+                        oldPeice = Piece.createPiece(endSquare.getRank(), 0, piece.getColor(), "ROOK");
+                    else
+                        throw new Error("Invalid destinationFile: " + endSquare.getFile());
+
+                    // Update board state for castled rook
+                    this.removePiece(oldPeice);
+                    this.setPiece(newPiece);
+                }
+            }
+            // if piece is a rook
+            else if (piece.toString().equals("ROOK")) {
+
+                // if white
+                if (piece.getColor().equalsIgnoreCase("WHITE")) {
+                    if (piece.getFile() == '0') {
+                        this.whiteQueenSideCastleAllowed = false;
+                    }
+                    if (piece.getFile() == '9') {
+                        this.whiteKingSideCastleAllowed = false;
+                    }
+                }
+
+                // if black
+                else if (piece.getColor().equalsIgnoreCase("BLACK")) {
+                    if (piece.getFile() == '0') {
+                        this.blackQueenSideCastleAllowed = false;
+                    }
+                    if (piece.getFile() == '9') {
+                        this.blackKingSideCastleAllowed = false;
+                    }
+                } else
+                    throw new Error("Invalid color: " + piece.getColor());
+            }
+        }
+
+        // This method sets the respective EnPassant fields and also changes the board
+        // state to accomadate special moves
+        private void setEnPassantFields(Move move) {
+            Square startSquare = move.getStartSquare();
+            Square endSquare = move.getEndSquare();
+            Piece piece = startSquare.getPiece();
+
+            // If piece is a pawn
+            if (piece.toString().equalsIgnoreCase("PAWN")) {
+                // If pawn has moved 2 steps
+                if (move.hasMovedTwoSteps()) {
+                    int enPassantFile = piece.getFile();
+                    int enPassantRank = (startSquare.getRank() + endSquare.getRank()) / 2;
+                    this.enPassantSquare = Square.createSquare(enPassantRank, enPassantFile, null);
+                    return; // This line prevents enPassantSquare from becoming null again at the end
+                }
+
+                // Remove piece if capture by en-passant
+                if (enPassantSquare != null && endSquare.equals(enPassantSquare)) {
+                    if (enPassantSquare.getRank() == 5) {
+                        Piece capturedPiece = board[4][enPassantSquare.getFile()].getPiece();
+                        this.removePiece(capturedPiece);
+                    } else if (enPassantSquare.getRank() == 3) {
+                        Piece capturedPiece = board[2][enPassantSquare.getFile()].getPiece();
+                        this.removePiece(capturedPiece);
+                    } else {
+                        throw new Error("Invalid enPassant rank: " + enPassantSquare.getRank());
+                    }
+                }
+            }
+            enPassantSquare = null;
         }
 
         // to change the current playing player.
@@ -247,12 +468,40 @@ public final class BoardController {
             return this;
         }
 
+        // Allow king side castling
+        private Builder setKingSideCastling(String color) {
+            if (color.equalsIgnoreCase("WHITE"))
+                this.whiteKingSideCastleAllowed = true;
+            else if (color.equalsIgnoreCase("BLACK"))
+                this.blackKingSideCastleAllowed = true;
+            else
+                throw new Error("Invalid Color: " + color);
+            return this;
+        }
+
+        // Allow queen side castling
+        private Builder setQueenSideCastling(String color) {
+            if (color.equalsIgnoreCase("WHITE"))
+                this.whiteQueenSideCastleAllowed = true;
+            else if (color.equalsIgnoreCase("BLACK"))
+                this.blackQueenSideCastleAllowed = true;
+            else
+                throw new Error("Invalid Color: " + color);
+            return this;
+        }
+
+        // Set enPassant square
+        private Builder setEnPassantSquare(Square square) {
+            this.enPassantSquare = square;
+            return this;
+        }
+
         // return immutable BoardController object
         // by making a shallow copy of the Builder object
         private BoardController build() {
             // make sure whitePlayer and blackPlayer have all board updates
-            this.whitePlayer = new Player(this.board, "WHITE");
-            this.blackPlayer = new Player(this.board, "BLACK");
+            // this.whitePlayer = new Player(this, "WHITE");
+            // this.blackPlayer = new Player(this, "BLACK");
 
             return new BoardController(this);
         }
