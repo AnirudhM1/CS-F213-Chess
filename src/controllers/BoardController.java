@@ -33,14 +33,16 @@ public final class BoardController {
     // and shallow copies it into a BoardController object
     private BoardController(Builder builder) {
         this.board = builder.board;
-        this.whitePlayer = builder.whitePlayer;
-        this.blackPlayer = builder.blackPlayer;
+        // this.whitePlayer = builder.whitePlayer;
+        // this.blackPlayer = builder.blackPlayer;
         this.currentPlayer = builder.currentPlayer;
         this.whiteKingSideCastleAllowed = builder.whiteKingSideCastleAllowed;
         this.whiteQueenSideCastleAllowed = builder.whiteQueenSideCastleAllowed;
         this.blackKingSideCastleAllowed = builder.blackKingSideCastleAllowed;
         this.blackQueenSideCastleAllowed = builder.blackQueenSideCastleAllowed;
         this.enPassantSquare = builder.enPassantSquare;
+        this.whitePlayer = new Player(this, "WHITE");
+        this.blackPlayer = new Player(this, "BLACK");
         haveLegalMovesGenerated = false;
     }
 
@@ -97,6 +99,26 @@ public final class BoardController {
 
     public String getCurrentPlayer() {
         return this.currentPlayer;
+    }
+
+    public boolean isWhiteKingCastleAllowed() {
+        return whiteKingSideCastleAllowed;
+    }
+
+    public boolean isBlackKingCastleAllowed() {
+        return whiteKingSideCastleAllowed;
+    }
+
+    public boolean isWhiteQueenCastleAllowed() {
+        return whiteKingSideCastleAllowed;
+    }
+
+    public boolean isBlackQueenCastleAllowed() {
+        return whiteKingSideCastleAllowed;
+    }
+
+    public Square getEnPassentSquare() {
+        return enPassantSquare;
     }
 
     // to create/initialize an instance of BoardController, with the Pieces at their
@@ -156,7 +178,7 @@ public final class BoardController {
             builder.setEnPassantSquare(null);
         } else {
             int enPassantFile = enPassant.charAt(0) - 'a';
-            int enPassantRank = Integer.parseInt(castling.substring(1));
+            int enPassantRank = Integer.parseInt(enPassant.substring(1));
             Square enPassantSquare = Square.createSquare(enPassantRank, enPassantFile, null);
             builder.setEnPassantSquare(enPassantSquare);
         }
@@ -205,9 +227,9 @@ public final class BoardController {
 
     // mutable Builder objects
     // used to build immutable BoardController objects
-    private static class Builder {
+    public static class Builder {
         private Square[][] board;
-        private Player whitePlayer, blackPlayer;
+        // private Player whitePlayer, blackPlayer;
         private String currentPlayer;
 
         // Fields to indicicate castling
@@ -246,6 +268,32 @@ public final class BoardController {
             this.blackKingSideCastleAllowed = prevBoard.blackKingSideCastleAllowed;
             this.blackQueenSideCastleAllowed = prevBoard.blackQueenSideCastleAllowed;
             this.enPassantSquare = prevBoard.enPassantSquare;
+        }
+
+        // Getters
+
+        public Square[][] getBoard() {
+            return board;
+        }
+
+        public boolean isWhiteKingCastleAllowed() {
+            return whiteKingSideCastleAllowed;
+        }
+
+        public boolean isBlackKingCastleAllowed() {
+            return whiteKingSideCastleAllowed;
+        }
+
+        public boolean isWhiteQueenCastleAllowed() {
+            return whiteKingSideCastleAllowed;
+        }
+
+        public boolean isBlackQueenCastleAllowed() {
+            return whiteKingSideCastleAllowed;
+        }
+
+        public Square getEnPassentSquare() {
+            return enPassantSquare;
         }
 
         // Adds the given piece to the board
@@ -452,8 +500,8 @@ public final class BoardController {
         // by making a shallow copy of the Builder object
         private BoardController build() {
             // make sure whitePlayer and blackPlayer have all board updates
-            this.whitePlayer = new Player(this.board, "WHITE");
-            this.blackPlayer = new Player(this.board, "BLACK");
+            // this.whitePlayer = new Player(this, "WHITE");
+            // this.blackPlayer = new Player(this, "BLACK");
 
             return new BoardController(this);
         }

@@ -23,7 +23,7 @@ public class TestBoardController {
 
     @Test
     public void testFenToBoard() {
-        String fen = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b";
+        String fen = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3";
         BoardController board = BoardController.createBoardFromFEN(fen);
 
         // Check Piece placement
@@ -43,7 +43,7 @@ public class TestBoardController {
 
     @Test
     public void testExecuteBoard() {
-        String fen = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b";
+        String fen = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -";
         BoardController initialBoard = BoardController.createBoardFromFEN(fen);
         Square[][] board = initialBoard.getBoard();
 
