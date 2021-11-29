@@ -62,24 +62,24 @@ public class Pawn extends Piece {
 
         if (super.getColor().equalsIgnoreCase("White")) {
 
-            if (!wasMoved) {
-
-                if (!board[super.getRank() + 2][super.getFile()].isOccupied()) {
-                    Square endSquare1 = board[super.getRank() + 2][super.getFile()];
-
-                    if (Check(endSquare1)) {
-                        legalMoves.add(new Move(startSquare, endSquare1));
-                    }
-
-                }
-
-            }
-
             if (!board[super.getRank() + 1][super.getFile()].isOccupied()) {
                 Square endSquare2 = board[super.getRank() + 1][super.getFile()];
 
                 if (Check(endSquare2)) {
                     legalMoves.add(new Move(startSquare, endSquare2));
+                }
+
+                if (!wasMoved) {
+
+                    if (!board[super.getRank() + 2][super.getFile()].isOccupied()) {
+                        Square endSquare1 = board[super.getRank() + 2][super.getFile()];
+
+                        if (Check(endSquare1)) {
+                            legalMoves.add(new Move(startSquare, endSquare1));
+                        }
+
+                    }
+
                 }
 
             }
@@ -114,24 +114,24 @@ public class Pawn extends Piece {
 
         if (super.getColor().equalsIgnoreCase("Black")) {
 
-            if (!wasMoved) {
-
-                if (!board[super.getRank() - 2][super.getFile()].isOccupied()) {
-                    Square endSquare5 = board[super.getRank() - 2][super.getFile()];
-
-                    if (Check(endSquare5)) {
-                        legalMoves.add(new Move(startSquare, endSquare5));
-                    }
-
-                }
-
-            }
-
             if (!board[super.getRank() - 1][super.getFile()].isOccupied()) {
                 Square endSquare6 = board[super.getRank() - 1][super.getFile()];
 
                 if (Check(endSquare6)) {
                     legalMoves.add(new Move(startSquare, endSquare6));
+                }
+
+                if (!wasMoved) {
+
+                    if (!board[super.getRank() - 2][super.getFile()].isOccupied()) {
+                        Square endSquare5 = board[super.getRank() - 2][super.getFile()];
+
+                        if (Check(endSquare5)) {
+                            legalMoves.add(new Move(startSquare, endSquare5));
+                        }
+
+                    }
+
                 }
 
             }
