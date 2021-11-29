@@ -59,7 +59,7 @@ public class TestBoardController {
         assertEquals("Current player is white", "WHITE", executedBoard.getCurrentPlayer().toUpperCase());
 
         // Check number of moves
-        assertEquals(25, executedBoard.getCurrentLegalMoves().size());
+        assertEquals(29, executedBoard.getCurrentLegalMoves().size());
 
         // Check Pieces
         assertFalse("e7 is empty", executedBoard.getBoard()[6][4].isOccupied());
