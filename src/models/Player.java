@@ -200,7 +200,129 @@ public class Player {
     }
     //-
     private void addEnPassantMove() {
+        if(enPassantSquare == null) {
+            return;
+        }
 
+        if(this.color.equalsIgnoreCase("White") && enPassantSquare.getRank() == 5) {
+            
+            int pawnRank = 4;
+            int pawnFile1 = enPassantSquare.getFile()-1;
+            int pawnFile2 = enPassantSquare.getFile()+1;
+            
+            if(pawnFile1 >= 0 && pawnFile1 < 8) {
+                Square square = board[pawnRank][pawnFile1];
+                if(square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if(piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        allMoves.add(move);
+                    }
+                }
+            }
+
+            if(pawnFile2 >= 0 && pawnFile2 < 8) {
+                Square square = board[pawnRank][pawnFile1];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        allMoves.add(move);
+                    }
+                }
+            }
+
+        }
+
+        if (this.color.equalsIgnoreCase("white") && enPassantSquare.getRank() == 2) {
+
+            int pawnRank = 3;
+            int pawnFile1 = enPassantSquare.getFile() - 1;
+            int pawnFile2 = enPassantSquare.getFile() + 1;
+
+            if (pawnFile1 >= 0 && pawnFile1 < 8) {
+                Square square = board[pawnRank][pawnFile1];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        allOpponentMoves.add(move);
+                    }
+                }
+            }
+
+            if (pawnFile2 >= 0 && pawnFile2 < 8) {
+                Square square = board[pawnRank][pawnFile1];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        allOpponentMoves.add(move);
+                    }
+                }
+            }
+
+        }
+
+        if (this.color.equalsIgnoreCase("black") && enPassantSquare.getRank() == 5) {
+
+            int pawnRank = 4;
+            int pawnFile1 = enPassantSquare.getFile() - 1;
+            int pawnFile2 = enPassantSquare.getFile() + 1;
+
+            if (pawnFile1 >= 0 && pawnFile1 < 8) {
+                Square square = board[pawnRank][pawnFile1];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        allOpponentMoves.add(move);
+                    }
+                }
+            }
+
+            if (pawnFile2 >= 0 && pawnFile2 < 8) {
+                Square square = board[pawnRank][pawnFile1];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        allOpponentMoves.add(move);
+                    }
+                }
+            }
+
+        }
+
+        if (this.color.equalsIgnoreCase("black") && enPassantSquare.getRank() == 2) {
+
+            int pawnRank = 3;
+            int pawnFile1 = enPassantSquare.getFile() - 1;
+            int pawnFile2 = enPassantSquare.getFile() + 1;
+
+            if (pawnFile1 >= 0 && pawnFile1 < 8) {
+                Square square = board[pawnRank][pawnFile1];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        allOpponentMoves.add(move);
+                    }
+                }
+            }
+
+            if (pawnFile2 >= 0 && pawnFile2 < 8) {
+                Square square = board[pawnRank][pawnFile1];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        allOpponentMoves.add(move);
+                    }
+                }
+            }
+
+        }
     }
 
 }
