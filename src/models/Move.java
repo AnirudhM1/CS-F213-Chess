@@ -27,8 +27,8 @@ public class Move {
     // Utility function to check if piece has moved more than one step
     // Useful for special moves
     public boolean hasMovedTwoSteps() {
-        int rank_moved = Math.abs(endSquare.getRank() - endSquare.getFile());
-        int file_moved = Math.abs(endSquare.getRank() - endSquare.getFile());
+        int rank_moved = Math.abs(endSquare.getRank() - startSquare.getRank());
+        int file_moved = Math.abs(endSquare.getFile() - startSquare.getFile());
 
         return (rank_moved == 2) || (file_moved == 2);
     }
