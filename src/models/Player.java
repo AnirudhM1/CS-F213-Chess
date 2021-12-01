@@ -38,6 +38,7 @@ public class Player {
         this.blackKingSideCastleAllowed = board.isBlackKingCastleAllowed();
         this.blackQueenSideCastleAllowed = board.isBlackQueenCastleAllowed();
         this.enPassantSquare = board.getEnPassentSquare();
+        addEnPassantMove();
     }
 
     private static String opponent(String color) {
@@ -113,130 +114,111 @@ public class Player {
         return this.color;
 
     }
-    
-    //-
+
+    // -
     private King findKing() {
-        for(Piece piece:allPieces){
-            if (((piece.getFile()==4 && piece.getRank()==0) || (piece.getFile()==4 && piece.getRank()==7) ) && (piece.toString().equalsIgnoreCase("K"))){
-                return (King)piece;
+        for (Piece piece : allPieces) {
+            if (((piece.getFile() == 4 && piece.getRank() == 0) || (piece.getFile() == 4 && piece.getRank() == 7))
+                    && (piece.toString().equalsIgnoreCase("K"))) {
+                return (King) piece;
             }
         }
         return null;
-        
+
     }
-    //Rook1 is for long castle('a' rook)
-    private Rook findRook1(){
-        for(Piece piece:allPieces){
-            if (((piece.getFile()==0 && piece.getRank()==0) || (piece.getFile()==0 && piece.getRank()==7) ) && (piece.toString().equalsIgnoreCase("R"))) {
-                return (Rook)piece;
+
+    // Rook1 is for long castle('a' rook)
+    private Rook findRook1() {
+        for (Piece piece : allPieces) {
+            if (((piece.getFile() == 0 && piece.getRank() == 0) || (piece.getFile() == 0 && piece.getRank() == 7))
+                    && (piece.toString().equalsIgnoreCase("R"))) {
+                return (Rook) piece;
             }
         }
         return null;
-        
+
     }
 
     private Rook findRook2() {
-        for(Piece piece:allPieces){
-            if (((piece.getFile()==7 && piece.getRank()==0) || (piece.getFile()==7 && piece.getRank()==7) ) && (piece.toString().equalsIgnoreCase("R"))) {
-                return (Rook)piece;
+        for (Piece piece : allPieces) {
+            if (((piece.getFile() == 7 && piece.getRank() == 0) || (piece.getFile() == 7 && piece.getRank() == 7))
+                    && (piece.toString().equalsIgnoreCase("R"))) {
+                return (Rook) piece;
             }
         }
         return null;
     }
 
     public boolean underAttack(Square square) {
-        for(Move move : allOpponentMoves){
-            if (move.getEndSquare()==square){
+        for (Move move : allOpponentMoves) {
+            if (move.getEndSquare() == square) {
                 return true;
             }
         }
         return false;
     }
 
-    
-
-    private void addCastleMove(){
+    private void addCastleMove() {
         King king = findKing();
-        Rook rook1= findRook1(); 
-        Rook rook2= findRook2();
-        //rook1 is for long castle('a'rook) and rook2 ('h' rook) is for short castle
+        Rook rook1 = findRook1();
+        Rook rook2 = findRook2();
+        // rook1 is for long castle('a'rook) and rook2 ('h' rook) is for short castle
 
-        //short castle for white king
-        if (whiteKingSideCastleAllowed){
-            Square startSquareK = Square.createSquare(0,4,king);
-            if (underAttack(board[4][0])==false && underAttack(board[0][5])==false && (board[0][5]).isOccupied()==false  && underAttack(board[0][6])==false && (board[0][6]).isOccupied()==false) {
+        // short castle for white king
+        if (whiteKingSideCastleAllowed) {
+            Square startSquareK = Square.createSquare(0, 4, king);
+            if (underAttack(board[4][0]) == false && underAttack(board[0][5]) == false
+                    && (board[0][5]).isOccupied() == false && underAttack(board[0][6]) == false
+                    && (board[0][6]).isOccupied() == false) {
                 Square endSquareK = board[0][6];
-                allMoves.add(new Move(startSquareK, endSquareK));//add king move
+                allMoves.add(new Move(startSquareK, endSquareK));// add king move
             }
         }
-        
-        //short castle for Black king
-        if (blackKingSideCastleAllowed){
-            Square startSquareK = Square.createSquare(7,4,king);
-            if (underAttack(board[4][7])==false && underAttack(board[7][5])==false && (board[7][5]).isOccupied()==false  && underAttack(board[7][6])==false && (board[7][6]).isOccupied()==false) {
+
+        // short castle for Black king
+        if (blackKingSideCastleAllowed) {
+            Square startSquareK = Square.createSquare(7, 4, king);
+            if (underAttack(board[4][7]) == false && underAttack(board[7][5]) == false
+                    && (board[7][5]).isOccupied() == false && underAttack(board[7][6]) == false
+                    && (board[7][6]).isOccupied() == false) {
                 Square endSquareK = board[7][6];
-                allMoves.add(new Move(startSquareK, endSquareK));//add king move    
+                allMoves.add(new Move(startSquareK, endSquareK));// add king move
             }
         }
-        
-        //long castle for White king
-        if (whiteQueenSideCastleAllowed){
-            Square startSquareK = Square.createSquare(0,4,king);
-            if (underAttack(board[4][0])==false && underAttack(board[0][3])==false && (board[0][3]).isOccupied()==false  && underAttack(board[0][2])==false && (board[0][2]).isOccupied()==false) {
+
+        // long castle for White king
+        if (whiteQueenSideCastleAllowed) {
+            Square startSquareK = Square.createSquare(0, 4, king);
+            if (underAttack(board[4][0]) == false && underAttack(board[0][3]) == false
+                    && (board[0][3]).isOccupied() == false && underAttack(board[0][2]) == false
+                    && (board[0][2]).isOccupied() == false) {
                 Square endSquareK = board[0][2];
-                allMoves.add(new Move(startSquareK, endSquareK));//add king move  
+                allMoves.add(new Move(startSquareK, endSquareK));// add king move
             }
         }
-        
-        //long castle for Black king
-        if (blackQueenSideCastleAllowed){
-            Square startSquareK = Square.createSquare(7,4,king);
-            if (underAttack(board[7][4])==false && underAttack(board[7][3])==false && (board[7][3]).isOccupied()==false  && underAttack(board[7][2])==false && (board[7][2]).isOccupied()==false) {
+
+        // long castle for Black king
+        if (blackQueenSideCastleAllowed) {
+            Square startSquareK = Square.createSquare(7, 4, king);
+            if (underAttack(board[7][4]) == false && underAttack(board[7][3]) == false
+                    && (board[7][3]).isOccupied() == false && underAttack(board[7][2]) == false
+                    && (board[7][2]).isOccupied() == false) {
                 Square endSquareK = board[7][2];
-                allMoves.add(new Move(startSquareK, endSquareK));//add king move
+                allMoves.add(new Move(startSquareK, endSquareK));// add king move
             }
         }
 
     }
-    //-
+
+    // -
     private void addEnPassantMove() {
-        if(enPassantSquare == null) {
+        if (enPassantSquare == null) {
             return;
         }
 
-        if(this.color.equalsIgnoreCase("White") && enPassantSquare.getRank() == 5) {
-            
+        if (this.color.equalsIgnoreCase("White") && enPassantSquare.getRank() == 5) {
+
             int pawnRank = 4;
-            int pawnFile1 = enPassantSquare.getFile()-1;
-            int pawnFile2 = enPassantSquare.getFile()+1;
-            
-            if(pawnFile1 >= 0 && pawnFile1 < 8) {
-                Square square = board[pawnRank][pawnFile1];
-                if(square.isOccupied()) {
-                    Piece piece = square.getPiece();
-                    if(piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
-                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
-                        allMoves.add(move);
-                    }
-                }
-            }
-
-            if(pawnFile2 >= 0 && pawnFile2 < 8) {
-                Square square = board[pawnRank][pawnFile1];
-                if (square.isOccupied()) {
-                    Piece piece = square.getPiece();
-                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
-                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
-                        allMoves.add(move);
-                    }
-                }
-            }
-
-        }
-
-        if (this.color.equalsIgnoreCase("white") && enPassantSquare.getRank() == 2) {
-
-            int pawnRank = 3;
             int pawnFile1 = enPassantSquare.getFile() - 1;
             int pawnFile2 = enPassantSquare.getFile() + 1;
 
@@ -245,19 +227,19 @@ public class Player {
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
                     if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
-                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
-                        allOpponentMoves.add(move);
+                        Move move = new Move(square, enPassantSquare);
+                        allMoves.add(move);
                     }
                 }
             }
 
             if (pawnFile2 >= 0 && pawnFile2 < 8) {
-                Square square = board[pawnRank][pawnFile1];
+                Square square = board[pawnRank][pawnFile2];
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
                     if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
-                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
-                        allOpponentMoves.add(move);
+                        Move move = new Move(square, enPassantSquare);
+                        allMoves.add(move);
                     }
                 }
             }
@@ -275,18 +257,48 @@ public class Player {
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
                     if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
-                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        Move move = new Move(square, enPassantSquare);
                         allOpponentMoves.add(move);
                     }
                 }
             }
 
             if (pawnFile2 >= 0 && pawnFile2 < 8) {
+                Square square = board[pawnRank][pawnFile2];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(square, enPassantSquare);
+                        allOpponentMoves.add(move);
+                    }
+                }
+            }
+
+        }
+
+        if (this.color.equalsIgnoreCase("white") && enPassantSquare.getRank() == 2) {
+
+            int pawnRank = 3;
+            int pawnFile1 = enPassantSquare.getFile() - 1;
+            int pawnFile2 = enPassantSquare.getFile() + 1;
+
+            if (pawnFile1 >= 0 && pawnFile1 < 8) {
                 Square square = board[pawnRank][pawnFile1];
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
                     if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
-                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
+                        Move move = new Move(square, enPassantSquare);
+                        allOpponentMoves.add(move);
+                    }
+                }
+            }
+
+            if (pawnFile2 >= 0 && pawnFile2 < 8) {
+                Square square = board[pawnRank][pawnFile2];
+                if (square.isOccupied()) {
+                    Piece piece = square.getPiece();
+                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                        Move move = new Move(square, enPassantSquare);
                         allOpponentMoves.add(move);
                     }
                 }
@@ -305,19 +317,19 @@ public class Player {
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
                     if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
-                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
-                        allOpponentMoves.add(move);
+                        Move move = new Move(square, enPassantSquare);
+                        allMoves.add(move);
                     }
                 }
             }
 
             if (pawnFile2 >= 0 && pawnFile2 < 8) {
-                Square square = board[pawnRank][pawnFile1];
+                Square square = board[pawnRank][pawnFile2];
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
                     if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
-                        Move move = new Move(board[pawnRank][pawnFile1], enPassantSquare);
-                        allOpponentMoves.add(move);
+                        Move move = new Move(square, enPassantSquare);
+                        allMoves.add(move);
                     }
                 }
             }
