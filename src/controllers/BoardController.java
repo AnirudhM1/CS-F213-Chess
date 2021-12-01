@@ -106,15 +106,15 @@ public final class BoardController {
     }
 
     public boolean isBlackKingCastleAllowed() {
-        return whiteKingSideCastleAllowed;
+        return blackKingSideCastleAllowed;
     }
 
     public boolean isWhiteQueenCastleAllowed() {
-        return whiteKingSideCastleAllowed;
+        return whiteQueenSideCastleAllowed;
     }
 
     public boolean isBlackQueenCastleAllowed() {
-        return whiteKingSideCastleAllowed;
+        return blackQueenSideCastleAllowed;
     }
 
     public Square getEnPassentSquare() {
@@ -397,7 +397,7 @@ public final class BoardController {
                 }
             }
             // if piece is a rook
-            else if (piece.toString().equals("ROOK")) {
+            else if (piece.toString().equals("R")) {
 
                 // if white
                 if (piece.getColor().equalsIgnoreCase("WHITE")) {
@@ -430,7 +430,7 @@ public final class BoardController {
             Piece piece = startSquare.getPiece();
 
             // If piece is a pawn
-            if (piece.toString().equalsIgnoreCase("PAWN")) {
+            if (piece.toString().equalsIgnoreCase("P")) {
                 // If pawn has moved 2 steps
                 if (move.hasMovedTwoSteps()) {
                     int enPassantFile = piece.getFile();
