@@ -106,15 +106,15 @@ public final class BoardController {
     }
 
     public boolean isBlackKingCastleAllowed() {
-        return whiteKingSideCastleAllowed;
+        return blackKingSideCastleAllowed;
     }
 
     public boolean isWhiteQueenCastleAllowed() {
-        return whiteKingSideCastleAllowed;
+        return whiteQueenSideCastleAllowed;
     }
 
     public boolean isBlackQueenCastleAllowed() {
-        return whiteKingSideCastleAllowed;
+        return blackQueenSideCastleAllowed;
     }
 
     public Square getEnPassentSquare() {

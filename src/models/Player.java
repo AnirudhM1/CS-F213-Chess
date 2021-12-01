@@ -39,6 +39,7 @@ public class Player {
         this.blackQueenSideCastleAllowed = board.isBlackQueenCastleAllowed();
         this.enPassantSquare = board.getEnPassentSquare();
         addEnPassantMove();
+        addCastleMove();
     }
 
     private static String opponent(String color) {
@@ -151,11 +152,16 @@ public class Player {
 
     public boolean underAttack(Square square) {
         for (Move move : allOpponentMoves) {
-            if (move.getEndSquare() == square) {
+            if (move.getEndSquare().equals(square)) {
                 return true;
             }
         }
         return false;
+    }
+
+    // Utility function to check if the player is white or not
+    private boolean isWhite() {
+        return color.equalsIgnoreCase("WHITE");
     }
 
     private void addCastleMove() {
@@ -165,9 +171,9 @@ public class Player {
         // rook1 is for long castle('a'rook) and rook2 ('h' rook) is for short castle
 
         // short castle for white king
-        if (whiteKingSideCastleAllowed) {
+        if (whiteKingSideCastleAllowed && isWhite()) {
             Square startSquareK = Square.createSquare(0, 4, king);
-            if (underAttack(board[4][0]) == false && underAttack(board[0][5]) == false
+            if (underAttack(board[0][4]) == false && underAttack(board[0][5]) == false
                     && (board[0][5]).isOccupied() == false && underAttack(board[0][6]) == false
                     && (board[0][6]).isOccupied() == false) {
                 Square endSquareK = board[0][6];
@@ -176,9 +182,9 @@ public class Player {
         }
 
         // short castle for Black king
-        if (blackKingSideCastleAllowed) {
+        if (blackKingSideCastleAllowed && !isWhite()) {
             Square startSquareK = Square.createSquare(7, 4, king);
-            if (underAttack(board[4][7]) == false && underAttack(board[7][5]) == false
+            if (underAttack(board[7][4]) == false && underAttack(board[7][5]) == false
                     && (board[7][5]).isOccupied() == false && underAttack(board[7][6]) == false
                     && (board[7][6]).isOccupied() == false) {
                 Square endSquareK = board[7][6];
@@ -187,9 +193,9 @@ public class Player {
         }
 
         // long castle for White king
-        if (whiteQueenSideCastleAllowed) {
+        if (whiteQueenSideCastleAllowed && isWhite()) {
             Square startSquareK = Square.createSquare(0, 4, king);
-            if (underAttack(board[4][0]) == false && underAttack(board[0][3]) == false
+            if (underAttack(board[0][4]) == false && underAttack(board[0][3]) == false
                     && (board[0][3]).isOccupied() == false && underAttack(board[0][2]) == false
                     && (board[0][2]).isOccupied() == false) {
                 Square endSquareK = board[0][2];
@@ -198,12 +204,12 @@ public class Player {
         }
 
         // long castle for Black king
-        if (blackQueenSideCastleAllowed) {
+        if (blackQueenSideCastleAllowed && !isWhite()) {
             Square startSquareK = Square.createSquare(7, 4, king);
             if (underAttack(board[7][4]) == false && underAttack(board[7][3]) == false
                     && (board[7][3]).isOccupied() == false && underAttack(board[7][2]) == false
                     && (board[7][2]).isOccupied() == false) {
-                Square endSquareK = board[7][2];
+                Square endSquareK = board[2][7];
                 allMoves.add(new Move(startSquareK, endSquareK));// add king move
             }
         }
