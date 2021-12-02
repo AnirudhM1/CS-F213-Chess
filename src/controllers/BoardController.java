@@ -338,8 +338,17 @@ public final class BoardController {
             Square endSquare = move.getEndSquare();
             int endRank = endSquare.getRank();
             int endFile = endSquare.getFile();
+            String pieceName;
+            // for default pawn promotion (WHITE)
+            if (name.equals("P") && endRank == 7)
+                pieceName = "QUEEN";
+            // for default pawn promotion (WHITE)
+            else if (name.equals("p") && endRank == 0)
+                pieceName = "QUEEN";
+            else
+                pieceName = getPieceName(name.charAt(0));
 
-            Piece newPeice = Piece.createPiece(endRank, endFile, color, getPieceName(name.charAt(0)));
+            Piece newPeice = Piece.createPiece(endRank, endFile, color, pieceName);
 
             this.removePiece(oldPeice);
             this.setPiece(newPeice);
