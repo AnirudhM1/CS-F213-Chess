@@ -3,13 +3,17 @@ package network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 
 public class ClientHandler extends Thread {
 
-    private final DataInputStream dis;
-    private final DataOutputStream dos;
+    public final Socket s;
 
-    public ClientHandler(DataInputStream dis, DataOutputStream dos) {
+    public final DataInputStream dis;
+    public final DataOutputStream dos;
+
+    public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos) {
+        this.s = s;
         this.dis = dis;
         this.dos = dos;
     }
@@ -19,8 +23,9 @@ public class ClientHandler extends Thread {
         while (true) {
             try {
                 String dataRecieved = dis.readUTF();
+                Server.transferMessage(this, dataRecieved);
 
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

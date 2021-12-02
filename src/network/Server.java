@@ -7,6 +7,21 @@ public class Server {
 
     private static final int PORT = 5000;
 
+    private static ClientHandler handler1 = null;
+    private static ClientHandler handler2 = null;
+
+    public static void transferMessage(ClientHandler handler, String msg) {
+        try {
+            if (handler == handler1) {
+                handler2.dos.writeUTF(msg);
+            } else {
+                handler1.dos.writeUTF(msg);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         ServerSocket ss = new ServerSocket(PORT);
 
@@ -14,8 +29,16 @@ public class Server {
         while (true) {
             Socket s = null;
             try {
+
                 // Accept incoming connection request
                 s = ss.accept();
+
+                if (handler1 != null && handler2 != null) {
+                    System.out.println("No space available for more requests");
+                    s.close();
+                    s = null;
+                    continue;
+                }
 
                 System.out.println("Client Connected: " + s);
 
@@ -24,7 +47,14 @@ public class Server {
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
                 // Creating a new thread
-                Thread t = new ClientHandler(dis, dos);
+                Thread t = new ClientHandler(s, dis, dos);
+
+                // Storing the handler
+                if (handler1 != null) {
+                    handler1 = (ClientHandler) t;
+                } else {
+                    handler2 = (ClientHandler) t;
+                }
 
                 // Starting the thread
                 t.start();
