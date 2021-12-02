@@ -1,16 +1,16 @@
 package controllers;
 
 import java.util.ArrayList;
-
 import models.Move;
 import models.Piece;
-import models.Square;
 import models.Player;
+import models.Square;
 
 public final class BoardController {
 
     private final Square[][] board;
-    private final Player whitePlayer, blackPlayer;
+    private final Player whitePlayer;
+    private final Player blackPlayer;
     private final String currentPlayer;
 
     // ! do not access currentLegalMoves directly.
@@ -124,8 +124,8 @@ public final class BoardController {
     // to create/initialize an instance of BoardController, with the Pieces at their
     // starting positions
     public static BoardController initialize() {
-        final String initFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-        return createBoardFromFEN(initFEN);
+        final String initFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        return createBoardFromFEN(initFen);
     }
 
     public BoardController executeMove(Move move) {
@@ -135,10 +135,10 @@ public final class BoardController {
 
     // To create an instance of BoardController from FEN String
     // TODO check for errors in FEN String
-    public static BoardController createBoardFromFEN(String FEN) {
-        String[] fields = FEN.split(" ");
-        String piece_placement = fields[0];
-        String active_color = fields[1];
+    public static BoardController createBoardFromFEN(String fen) {
+        String[] fields = fen.split(" ");
+        String piecePlacement = fields[0];
+        String activeColor = fields[1];
         String castling = fields[2];
         String enPassant = fields[3];
         // String half_moves = fields[4];
@@ -148,7 +148,7 @@ public final class BoardController {
 
         // For piece placement
         int rank = 7;
-        for (String row : piece_placement.split("/")) {
+        for (String row : piecePlacement.split("/")) {
             int file = 0;
             for (char c : row.toCharArray()) {
                 if (Character.isAlphabetic(c)) {
@@ -166,7 +166,7 @@ public final class BoardController {
         }
 
         // For active color
-        String currentPlayerColor = (active_color.equals("w")) ? "WHITE" : "BLACK";
+        String currentPlayerColor = (activeColor.equals("w")) ? "WHITE" : "BLACK";
         builder.setCurrentPlayer(currentPlayerColor);
 
         // For castling
@@ -201,6 +201,9 @@ public final class BoardController {
                     break;
                 case 'Q':
                     builder.setQueenSideCastling("WHITE");
+                default:
+                    // Do nothing
+                    break;
             }
         }
     }
@@ -380,9 +383,7 @@ public final class BoardController {
                 if (piece.getColor().equalsIgnoreCase("WHITE")) {
                     whiteKingSideCastleAllowed = false;
                     whiteQueenSideCastleAllowed = false;
-                }
-                // If black
-                else {
+                } else {
                     blackKingSideCastleAllowed = false;
                     blackQueenSideCastleAllowed = false;
                 }
@@ -453,8 +454,8 @@ public final class BoardController {
                     if (enPassantSquare.getRank() == 5) {
                         Piece capturedPiece = board[4][enPassantSquare.getFile()].getPiece();
                         this.removePiece(capturedPiece);
-                    } else if (enPassantSquare.getRank() == 3) {
-                        Piece capturedPiece = board[2][enPassantSquare.getFile()].getPiece();
+                    } else if (enPassantSquare.getRank() == 2) {
+                        Piece capturedPiece = board[3][enPassantSquare.getFile()].getPiece();
                         this.removePiece(capturedPiece);
                     } else {
                         throw new Error("Invalid enPassant rank: " + enPassantSquare.getRank());

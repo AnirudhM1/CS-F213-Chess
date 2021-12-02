@@ -129,26 +129,28 @@ public class Player {
     }
 
     // Rook1 is for long castle('a' rook)
-    private Rook findRook1() {
-        for (Piece piece : allPieces) {
-            if (((piece.getFile() == 0 && piece.getRank() == 0) || (piece.getFile() == 0 && piece.getRank() == 7))
-                    && (piece.toString().equalsIgnoreCase("R"))) {
-                return (Rook) piece;
-            }
-        }
-        return null;
+    // private Rook findRook1() {
+    // for (Piece piece : allPieces) {
+    // if (((piece.getFile() == 0 && piece.getRank() == 0) || (piece.getFile() == 0
+    // && piece.getRank() == 7))
+    // && (piece.toString().equalsIgnoreCase("R"))) {
+    // return (Rook) piece;
+    // }
+    // }
+    // return null;
 
-    }
+    // }
 
-    private Rook findRook2() {
-        for (Piece piece : allPieces) {
-            if (((piece.getFile() == 7 && piece.getRank() == 0) || (piece.getFile() == 7 && piece.getRank() == 7))
-                    && (piece.toString().equalsIgnoreCase("R"))) {
-                return (Rook) piece;
-            }
-        }
-        return null;
-    }
+    // private Rook findRook2() {
+    // for (Piece piece : allPieces) {
+    // if (((piece.getFile() == 7 && piece.getRank() == 0) || (piece.getFile() == 7
+    // && piece.getRank() == 7))
+    // && (piece.toString().equalsIgnoreCase("R"))) {
+    // return (Rook) piece;
+    // }
+    // }
+    // return null;
+    // }
 
     public boolean underAttack(Square square) {
         for (Move move : allOpponentMoves) {
@@ -166,8 +168,8 @@ public class Player {
 
     private void addCastleMove() {
         King king = findKing();
-        Rook rook1 = findRook1();
-        Rook rook2 = findRook2();
+        // Rook rook1 = findRook1();
+        // Rook rook2 = findRook2();
         // rook1 is for long castle('a'rook) and rook2 ('h' rook) is for short castle
 
         // short castle for white king
@@ -292,7 +294,7 @@ public class Player {
                 Square square = board[pawnRank][pawnFile1];
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
-                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                    if (piece.getColor().equalsIgnoreCase("BLACK") && piece.toString().equalsIgnoreCase("P")) {
                         Move move = new Move(square, enPassantSquare);
                         allOpponentMoves.add(move);
                     }
@@ -303,7 +305,7 @@ public class Player {
                 Square square = board[pawnRank][pawnFile2];
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
-                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                    if (piece.getColor().equalsIgnoreCase("BLACK") && piece.toString().equalsIgnoreCase("P")) {
                         Move move = new Move(square, enPassantSquare);
                         allOpponentMoves.add(move);
                     }
@@ -322,7 +324,7 @@ public class Player {
                 Square square = board[pawnRank][pawnFile1];
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
-                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                    if (piece.getColor().equalsIgnoreCase("BLACK") && piece.toString().equalsIgnoreCase("P")) {
                         Move move = new Move(square, enPassantSquare);
                         allMoves.add(move);
                     }
@@ -333,7 +335,7 @@ public class Player {
                 Square square = board[pawnRank][pawnFile2];
                 if (square.isOccupied()) {
                     Piece piece = square.getPiece();
-                    if (piece.getColor().equalsIgnoreCase("WHITE") && piece.toString().equalsIgnoreCase("P")) {
+                    if (piece.getColor().equalsIgnoreCase("BLACK") && piece.toString().equalsIgnoreCase("P")) {
                         Move move = new Move(square, enPassantSquare);
                         allMoves.add(move);
                     }
