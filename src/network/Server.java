@@ -32,6 +32,11 @@ public class Server {
             Socket s = null;
             try {
 
+                if (handler1 != null && handler2 != null) {
+                    handler1.startGame();
+                    handler2.startGame();
+                }
+
                 // Accept incoming connection request
                 s = ss.accept();
 
@@ -52,7 +57,7 @@ public class Server {
                 Thread t = new ClientHandler(s, dis, dos);
 
                 // Storing the handler
-                if (handler1 != null) {
+                if (handler1 == null) {
                     handler1 = (ClientHandler) t;
                 } else {
                     handler2 = (ClientHandler) t;

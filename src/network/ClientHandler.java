@@ -18,6 +18,14 @@ public class ClientHandler extends Thread {
         this.dos = dos;
     }
 
+    public void startGame() {
+        try {
+            dos.writeUTF("0");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         try {
