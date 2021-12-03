@@ -25,6 +25,8 @@ public class Gui {
     private JPanel optionPanel;
     private JPanel extraPanel;
 
+    private Client client;
+
     // private Updater updater;
 
     public Gui() {
@@ -39,9 +41,9 @@ public class Gui {
         setPanels();
 
         // For debugging
-        Client client = new Client("172.17.242.242", 5000, updater);
-        Thread t = new Thread(client);
-        t.start();
+        client = new Client("x.x.x.x", 5000, updater);
+        // Thread t = new Thread(client);
+        // t.start();
     }
 
     public void run() {
@@ -78,7 +80,7 @@ public class Gui {
 
         outerBoardPanel = new JPanel();
         outerBoardPanel.setLayout(new GridBagLayout());
-        outerBoardPanel.setBackground(Color.RED);
+        outerBoardPanel.setBackground(Color.GRAY);
 
         c.gridx = 0;
         c.gridwidth = 1;
@@ -96,7 +98,7 @@ public class Gui {
 
         extraPanel = new JPanel();
         // extraPanel.setLayout();
-        extraPanel.setBackground(Color.BLUE);
+        extraPanel.setBackground(Color.GRAY);
 
         c.gridx = 1;
         c.gridwidth = 1;
