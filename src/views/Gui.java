@@ -1,11 +1,13 @@
 package views;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controllers.Updater;
 import models.Move;
 import models.Square;
+import network.Client;
 import views.board.BoardPanel;
 
 // import javax.swing.*;
@@ -16,11 +18,14 @@ import java.awt.*;
 
 public class Gui {
     private JFrame mainframe;
+    private JFrame connectionFrame;
 
     private JPanel outerBoardPanel;
     private BoardPanel boardPanel;
     private JPanel optionPanel;
     private JPanel extraPanel;
+
+    private Client client;
 
     // private Updater updater;
 
@@ -30,11 +35,15 @@ public class Gui {
     }
 
     public Gui(Updater updater) {
-
         // this.updater = updater;
 
         setMainFrame();
         setPanels();
+
+        // For debugging
+        client = new Client("x.x.x.x", 5000, updater);
+        // Thread t = new Thread(client);
+        // t.start();
     }
 
     public void run() {
@@ -71,7 +80,7 @@ public class Gui {
 
         outerBoardPanel = new JPanel();
         outerBoardPanel.setLayout(new GridBagLayout());
-        outerBoardPanel.setBackground(Color.RED);
+        outerBoardPanel.setBackground(Color.GRAY);
 
         c.gridx = 0;
         c.gridwidth = 1;
@@ -89,7 +98,7 @@ public class Gui {
 
         extraPanel = new JPanel();
         // extraPanel.setLayout();
-        extraPanel.setBackground(Color.BLUE);
+        extraPanel.setBackground(Color.GRAY);
 
         c.gridx = 1;
         c.gridwidth = 1;
@@ -119,6 +128,21 @@ public class Gui {
 
     public void addMove(Move move) {
         // TODO Add move to the move list
+    }
+
+    public void startConnectionWaiting() {
+        connectionFrame = new JFrame();
+        connectionFrame.setLocationRelativeTo(null);
+        connectionFrame.setAlwaysOnTop(true);
+        connectionFrame.setSize(200, 200);
+        JLabel connectionLabel = new JLabel();
+        connectionLabel.setText("AWAITING CONNECTION");
+        connectionFrame.getContentPane().add(connectionLabel);
+        connectionFrame.setVisible(true);
+    }
+
+    public void endConnectionWaiting() {
+        connectionFrame.setVisible(false);
     }
 
 }

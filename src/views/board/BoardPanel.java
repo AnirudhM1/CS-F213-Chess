@@ -17,7 +17,7 @@ import models.Square;
 public class BoardPanel extends JPanel {
 
     public static final Color WHITE_COLOR = Color.WHITE;
-    public static final Color BLACK_COLOR = Color.GREEN;
+    public static final Color BLACK_COLOR = new Color(165, 42, 42);
 
     private Square[][] board;
     private Updater updater;

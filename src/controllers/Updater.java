@@ -1,11 +1,16 @@
 package controllers;
 
 import models.Move;
+import models.Square;
+import network.Client;
 import views.Gui;
 
 public class Updater {
     private BoardController board;
     private Gui gui;
+
+    private boolean inSocketMode;
+    private Client client;
 
     public Updater() {
         init();
@@ -14,11 +19,17 @@ public class Updater {
     private void init() {
         gui = new Gui(this);
         board = null;
+        inSocketMode = false;
+    }
+
+    public void connect(Client client) {
+        inSocketMode = true;
+        this.client = client;
     }
 
     public void start() {
-        board = BoardController.initialize(); // Default board
-        gui.setState(this, board.getBoard()); // We are using defaultBoard only for debugging purposes
+        board = BoardController.initialize();
+        gui.setState(this, board.getBoard());
         gui.run();
     }
 
@@ -28,7 +39,37 @@ public class Updater {
             board = board.executeMove(move);
             gui.setState(this, board.getBoard());
             gui.addMove(move);
+
+            // Send to move to other device
+            if (inSocketMode)
+                client.write(move.toString());
         }
+    }
+
+    public void checkAndUpdate(String move) {
+        String[] squares = move.split(" ");
+        String start = squares[0];
+        String end = squares[1];
+
+        int startRank = start.charAt(1) - '1';
+        int startFile = start.charAt(0) - 'a';
+        int endRank = end.charAt(1) - '1';
+        int endFile = end.charAt(0) - 'a';
+
+        Square startSquare = board.getBoard()[startRank][startFile];
+        Square endSquare = board.getBoard()[endRank][endFile];
+
+        Move parsedMove = new Move(startSquare, endSquare);
+        checkAndUpdate(parsedMove);
+    }
+
+    // These functions are to display connection messages for server client model
+    public void connectionWaiting() {
+        gui.startConnectionWaiting();
+    }
+
+    public void endConnectionWaiting() {
+        gui.endConnectionWaiting();
     }
 
     // // This function is only used for debugging purposes.
