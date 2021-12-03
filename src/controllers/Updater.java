@@ -10,6 +10,7 @@ public class Updater {
     private Gui gui;
 
     private boolean inSocketMode;
+    private Client client;
 
     public Updater() {
         init();
@@ -21,9 +22,9 @@ public class Updater {
         inSocketMode = false;
     }
 
-    public void connect(String host, int port) {
+    public void connect(Client client) {
         inSocketMode = true;
-        Client.connect(host, port, this);
+        this.client = client;
     }
 
     public void start() {
@@ -41,13 +42,14 @@ public class Updater {
 
             // Send to move to other device
             if (inSocketMode)
-                Client.write(move.toString());
+                client.write(move.toString());
         }
     }
 
     public void checkAndUpdate(String move) {
-        String start = move.substring(0, 2);
-        String end = move.substring(2);
+        String[] squares = move.split(" ");
+        String start = squares[0];
+        String end = squares[1];
 
         int startRank = start.charAt(1) - '1';
         int startFile = start.charAt(0) - 'a';

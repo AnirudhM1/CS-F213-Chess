@@ -39,7 +39,9 @@ public class Gui {
         setPanels();
 
         // For debugging
-        Client.connect("10.60.19.56", 5000, updater);
+        Client client = new Client("172.17.242.242", 5000, updater);
+        Thread t = new Thread(client);
+        t.start();
     }
 
     public void run() {

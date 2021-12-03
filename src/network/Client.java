@@ -9,7 +9,7 @@ import java.net.Socket;
 import controllers.Updater;
 // import models.Move;
 
-public class Client {
+public class Client implements Runnable {
 
     // public static void main(String[] args) {
     // try {
@@ -19,10 +19,20 @@ public class Client {
     // }
     // }
 
-    private static Socket server;
-    private static DataOutputStream dos;
+    private Socket server;
+    private DataOutputStream dos;
 
-    public static void connect(String host, int port, Updater updater) {
+    private String host;
+    private int port;
+    private Updater updater;
+
+    public Client(String host, int port, Updater updater) {
+        this.host = host;
+        this.port = port;
+        this.updater = updater;
+    }
+
+    public void connect() {
 
         try {
             server = new Socket(host, port);
@@ -33,12 +43,13 @@ public class Client {
             try {
                 String connectionRequest = dis.readUTF();
                 if (connectionRequest.equals("0")) {
-                    updater.connectionWaiting();
+                    // updater.connectionWaiting();
                 }
 
                 String connection = dis.readUTF();
                 if (connection.equals("0")) {
-                    updater.endConnectionWaiting();
+                    // updater.endConnectionWaiting();
+                    updater.connect(this);
                     updater.start();
                 }
             } catch (IOException e) {
@@ -64,12 +75,17 @@ public class Client {
 
     }
 
-    public static void write(String msg) {
+    public void write(String msg) {
         try {
             dos.writeUTF(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void run() {
+        connect();
     }
 
 }
