@@ -34,9 +34,21 @@
             </manifest>
         </jar>
     </target>
+    <target name="server-jar" depends="compile">
+        <mkdir dir="${jar.dir}" />
+        <jar destfile="${jar.dir}/Server.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Server" value="${network.Server}" />
+            </manifest>
+        </jar>
+    </target>
 
     <target name="run" depends="jar">
         <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+    </target>
+
+    <target name="server" depends="server-jar">
+        <java jar="${jar.dir}/Server.jar" fork="true"/>
     </target>
 
     <target name="clean-build" depends="clean,jar"/>

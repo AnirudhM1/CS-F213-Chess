@@ -25,6 +25,8 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServerSocket ss = new ServerSocket(PORT);
 
+        System.out.println("Server is listening on port: " + PORT);
+
         // The loop runs infinitely to recieve client requests
         while (true) {
             Socket s = null;

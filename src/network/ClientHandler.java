@@ -20,6 +20,11 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() {
+        try {
+            dos.writeUTF("0");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         while (true) {
             try {
                 String dataRecieved = dis.readUTF();

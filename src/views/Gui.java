@@ -1,11 +1,13 @@
 package views;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controllers.Updater;
 import models.Move;
 import models.Square;
+import network.Client;
 import views.board.BoardPanel;
 
 // import javax.swing.*;
@@ -16,6 +18,7 @@ import java.awt.*;
 
 public class Gui {
     private JFrame mainframe;
+    private JFrame connectionFrame;
 
     private JPanel outerBoardPanel;
     private BoardPanel boardPanel;
@@ -30,11 +33,13 @@ public class Gui {
     }
 
     public Gui(Updater updater) {
-
         // this.updater = updater;
 
         setMainFrame();
         setPanels();
+
+        // For debugging
+        Client.connect("10.60.19.56", 5000, updater);
     }
 
     public void run() {
@@ -119,6 +124,21 @@ public class Gui {
 
     public void addMove(Move move) {
         // TODO Add move to the move list
+    }
+
+    public void startConnectionWaiting() {
+        connectionFrame = new JFrame();
+        connectionFrame.setLocationRelativeTo(null);
+        connectionFrame.setAlwaysOnTop(true);
+        connectionFrame.setSize(200, 200);
+        JLabel connectionLabel = new JLabel();
+        connectionLabel.setText("AWAITING CONNECTION");
+        connectionFrame.getContentPane().add(connectionLabel);
+        connectionFrame.setVisible(true);
+    }
+
+    public void endConnectionWaiting() {
+        connectionFrame.setVisible(false);
     }
 
 }

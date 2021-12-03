@@ -30,6 +30,21 @@ public class Client {
             DataInputStream dis = new DataInputStream(server.getInputStream());
             dos = new DataOutputStream(server.getOutputStream());
 
+            try {
+                String connectionRequest = dis.readUTF();
+                if (connectionRequest.equals("0")) {
+                    updater.connectionWaiting();
+                }
+
+                String connection = dis.readUTF();
+                if (connection.equals("0")) {
+                    updater.endConnectionWaiting();
+                    updater.start();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             Thread readMessage = new Thread(() -> {
                 while (true) {
                     try {

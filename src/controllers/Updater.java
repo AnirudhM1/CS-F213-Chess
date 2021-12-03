@@ -61,6 +61,15 @@ public class Updater {
         checkAndUpdate(parsedMove);
     }
 
+    // These functions are to display connection messages for server client model
+    public void connectionWaiting() {
+        gui.startConnectionWaiting();
+    }
+
+    public void endConnectionWaiting() {
+        gui.endConnectionWaiting();
+    }
+
     // // This function is only used for debugging purposes.
     // // This is to be deleted when the initialize function is completed in BC
     // private static Square[][] defaultBoard() {
